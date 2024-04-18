@@ -1,0 +1,33 @@
+/* 头部样式 */
+.header {
+    background-color: white !important; /* 设置背景颜色为白色，使用 !important 来覆盖其他样式 */
+    padding: 0; /* 移除内边距，使头部内无空间 */
+}
+
+/* 导航栏样式 */
+.navbar {
+    align-content: center; /* 垂直方向上内容居中 */
+    margin-left: auto; /* 通过将左边距设置为自动，来水平居中导航栏 */
+    margin-right: auto; /* 通过将右边距设置为自动，来水平居中导航栏 */
+    padding: 0 50px; /* 移除垂直内边距，设置水平内边距为50px，以增加两边的空间 */
+}
+
+/* SVG 图标样式 */
+svg {
+    vertical-align: baseline; /* 将 SVG 的基线与周围文本对齐，防止对齐问题 */
+}
+
+/* 页脚样式 */
+.footer {
+    text-align: center; /* 将页脚内的文本居中显示，以保持一致性和美观 */
+}
+
+/* 基础布局样式 */
+.basic-layout {
+    min-height: 100vh !important; /* 确保基本布局至少填充满视口的高度，对单页设计很重要 */
+}
+
+/* 卡片容器样式 */
+.card-container {
+    margin: 20px; /* 设置卡片容器周围统一的边距，确保间隔一致性 */
+}

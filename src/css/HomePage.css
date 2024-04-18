@@ -1,0 +1,49 @@
+/* HomePage.css */
+
+.card-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.search-input .ant-input {
+    border-radius: 10px;
+    padding: 10px;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.search-input .ant-btn-primary {
+    background-color: #00A3D9;
+    border-color: #00A3D9;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    border-radius: 10px;
+}
+
+.book-list {
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+/* Customize the pagination component */
+.ant-pagination {
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.ant-pagination-item,
+.ant-pagination-prev,
+.ant-pagination-next {
+    border-radius: 8px;
+}
+
+.ant-pagination-item a {
+    color: #00A3D9;
+}
+
+.ant-pagination-item-active {
+    background-color: #00A3D9;
+    border-color: #00A3D9;
+}
+
+.ant-pagination-item-active a {
+    color: #fff;
+}
