@@ -1,5 +1,6 @@
+
 // 导入所需组件
-import { List, Avatar } from "antd"
+import { List, Avatar, Space } from "antd"
 
 // 订单商品列表组件
 export default function OrderItemList({ orderItems }) {
@@ -14,12 +15,13 @@ export default function OrderItemList({ orderItems }) {
                         // 商品封面
                         avatar={<Avatar shape="square" size={80} src={item.book.cover} />}
                         // 商品标题
-                        title={item.book.title}
+                        title={<span style={{ fontWeight: 'bold' }}>{item.book.title}</span>}
                         // 商品数量
-                        description={`数量：${item.number}`}
+                        description={<Space><span style={{ color: 'grey' }}>Quantity:</span> <span>{item.number}</span></Space>}
                     />
                 </List.Item>
             )}
+            style={{ fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}
         />
     );
 }

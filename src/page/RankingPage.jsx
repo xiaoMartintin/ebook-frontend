@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import { PrivateLayout } from "../components/layout";
-import BookRankChart from "../components/book_rank_chart";
+import BookRankChart from "../components/RankingChart";
 import { useEffect, useState } from "react";
 import { getTop10BestSellingBooks } from "../service/book";
 
@@ -29,9 +29,9 @@ export default function RankPage() {
     // 渲染组件
     return (
         <PrivateLayout>
-            <Card className="card-container" style={{ maxWidth: 1200, margin: "auto", padding: "20px" }}>
+            <Card className="card-container" style={{maxWidth: 1200, margin: "auto", padding: "20px"}}>
                 {/* 传递图书数据到 BookRankChart 组件以展示图书排行榜 */}
-                <BookRankChart books={books} />
+                <BookRankChart books={books}/>
             </Card>
         </PrivateLayout>
     );

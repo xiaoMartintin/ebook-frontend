@@ -1,5 +1,5 @@
 import { ConfigProvider, theme } from 'antd';
-import AppRouter from './components/router';
+import AppRouter from './page/router';
 
 function App() {
   // 定义自定义主题颜色

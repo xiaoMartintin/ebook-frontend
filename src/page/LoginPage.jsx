@@ -74,8 +74,8 @@ const LoginPage = () => {
                     />
 
                     <div style={{ marginBlockEnd: 24, width: '100%', textAlign: 'center' }}>
-                        <Link to='/register' style={{ marginRight: '10px' }}>新账号？前往注册</Link>
-                        <a href="#/">忘记密码</a>
+                        <Link to='/register' style={{ marginRight: '10px' }}>New Account? Register </Link>
+                        <a href="#/">     Forgot password? </a>
                     </div>
                 </LoginForm>
             </div>

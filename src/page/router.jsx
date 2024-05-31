@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "../page/home";
-import LoginPage from "../page/login";
-import BookPage from "../page/book";
-import CartPage from "../page/cart";
-import OrderPage from "../page/order";
-import RankPage from "../page/rank";
-import ApiPage from "../page/api";
+import HomePage from "./HomePage";
+import LoginPage from "./LoginPage";
+import BookPage from "./BookPage";
+import CartPage from "./CartPage";
+import OrderPage from "./OrderPage";
+import RankPage from "./RankingPage";
+import ApiPage from "./ApiPage";
 
 /**
  * AppRouter 组件用于配置应用程序的路由

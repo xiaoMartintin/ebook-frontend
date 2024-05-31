@@ -1,0 +1,50 @@
+/* BookCard.css */
+
+.book-card {
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%; /* 确保卡片宽度一致 */
+    max-width: 300px; /* 设置最大宽度 */
+    margin: 0 auto; /* 水平居中 */
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.book-card-meta {
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    color: #333; /* 颜色与HomePage相符 */
+}
+
+.book-card-meta p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.book-card-meta p span {
+    margin-right: 10px;
+}
+
+.book-card-meta p:first-child {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #00A3D9; /* 颜色与HomePage相符 */
+}
+
+.book-author {
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%; /* 确保宽度一致 */
+}
+
+.book-sales {
+    margin-left: auto;
+    text-align: right;
+}

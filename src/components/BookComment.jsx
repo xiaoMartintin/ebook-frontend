@@ -1,11 +1,12 @@
-import { List, Space } from "antd";
-import UsernameAvatar from "./username_avatar";
-import LikeButton from "./like_button";
+import { List, Space, Typography, Avatar, Button } from "antd";
 import { formatTime } from "../utils/time";
-import CommentInput from "./comment_input";
+import CommentInput from "./WriteComment";
 import { likeComment, replyComment, unlikeComment } from "../service/comment";
 import { handleBaseApiResponse } from "../utils/message";
 import useMessage from "antd/es/message/useMessage";
+import LikeButton from "./LikeButton";
+
+const { Text } = Typography;
 
 /**
  * 书籍评论组件，用于展示和操作一个评论。
@@ -21,7 +22,7 @@ export default function BookComment({ comment, isReplying, onReply, onMutate }) 
     const [messageApi, contextHolder] = useMessage();  // 使用消息上下文
 
     // 构建回复信息前缀
-    const replyPrefix = comment.reply ? `回复 ${comment.reply}：` : '';
+    const replyPrefix = comment.reply ? `Reply to ${comment.reply}: ` : '';
 
     // 处理点击回复链接
     const handleReplyClick = (event) => {
@@ -52,44 +53,39 @@ export default function BookComment({ comment, isReplying, onReply, onMutate }) 
     // 构建评论内容
     const commentContent = (
         <Space direction="vertical" style={{ width: '100%' }}>
-            <p style={{ fontSize: 16, color: "black", margin: 0 }}>{replyPrefix}{comment.content}</p>
-            <Space>
-                {/* 格式化显示评论时间 */}
-                {formatTime(comment.createdAt)}
-                <LikeButton
-                    defaultNumber={comment.like}
-                    liked={comment.liked}
-                    onLike={handleLike}
-                    onUnlike={handleUnlike}
-                />
-                <button style={{
-                    color: "grey",
-                    fontSize: 14,
-                    background: "none",
-                    border: "none",
-                    padding: 0,
-                    cursor: "pointer"
-                }}
-                        onClick={handleReplyClick}>回复
-                </button>
-            </Space>
+            <div style={{ backgroundColor: "#E6F7FF", padding: "10px", borderRadius: "5px" }}>
+                <p style={{ fontSize: 16, color: "black", margin: 0 }}>{replyPrefix}{comment.content}</p>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
+                <Text type="secondary">{formatTime(comment.createdAt)}</Text>
+                <Space size="middle">
+                    <LikeButton
+                        defaultNumber={comment.like}
+                        liked={comment.liked}
+                        onLike={handleLike}
+                        onUnlike={handleUnlike}
+                    />
+                    <Button type="link" onClick={handleReplyClick} style={{ padding: 0, fontSize: 14 }}>Reply</Button>
+                </Space>
+            </div>
             {isReplying && (
                 <CommentInput
-                    placeholder={`回复 ${comment.username}：`}
+                    placeholder={`Reply to ${comment.username}:`}
                     onSubmit={handleReplySubmit}
                 />
             )}
         </Space>
     );
 
+
     // 渲染组件
     return (
         <>
             {contextHolder}
-            <List.Item key={comment.id}>
+            <List.Item key={comment.id} style={{ padding: "20px 0", borderBottom: "1px solid #e8e8e8" }}>
                 <List.Item.Meta
-                    avatar={<UsernameAvatar username={comment.username} />}
-                    title={<div style={{ color: "grey" }}>{comment.username}</div>}
+                    avatar={<Avatar style={{ backgroundColor: "#87d068" }}>{comment.username[0].toUpperCase()}</Avatar>}
+                    title={<Text strong style={{ color: "#333" }}>{comment.username}</Text>}
                     description={commentContent}
                 />
             </List.Item>

@@ -1,0 +1,82 @@
+/* NavBar.css */
+
+.navbar-sider {
+    background-color: #fff;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.navbar-logo {
+    padding: 16px;
+    text-align: center;
+}
+
+.navbar-menu {
+    border-right: none;
+    background-color: #fff;
+}
+
+.navbar-menu .ant-menu-item {
+    font-size: 16px;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    border: none;
+    height: 48px; /* 确保菜单项的高度与导航栏一致 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-menu .ant-menu-item-selected,
+.navbar-menu .ant-menu-item-active {
+    background-color: #00A3D9 !important;
+    color: #fff !important;
+}
+
+.navbar-menu .ant-menu-item a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.navbar-menu .ant-menu-item .anticon {
+    margin-right: 8px;
+}
+
+.navbar-menu .ant-menu-item-selected::after {
+    display: none; /* 移除重复的选中样式 */
+}
+
+.nav-button {
+    margin: 0 8px;
+    padding: 8px 16px;
+    background-color: #b3e5f7;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    height: auto; /* 确保按钮高度不超过导航栏 */
+}
+
+.nav-button:hover {
+    background-color: #007da0;
+}
+
+.user-menu {
+    border-right: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+}
+
+.user-menu .ant-menu-item {
+    font-size: 16px;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    border-bottom: none;
+    height: 48px; /* 确保菜单项的高度与导航栏一致 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-menu {
+    cursor: pointer;
+}

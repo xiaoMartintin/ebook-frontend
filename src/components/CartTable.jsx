@@ -1,13 +1,18 @@
-// 导入所需组件和方法
-import { Button, Col, Image, Row, Table, InputNumber } from "antd";
+import { List, Space, Table, Image, Button, InputNumber, Row, Col } from "antd";
 import { changeCartItemNumber, deleteCartItem } from "../service/cart";
 import useMessage from "antd/es/message/useMessage";
 import { handleBaseApiResponse } from "../utils/message";
 import { useEffect, useState } from "react";
-import PlaceOrderModal from "./place_order_modal";
 import { Link } from "react-router-dom";
+import PlaceOrderModal from "./OrderModal";
 
-// 创建购物车商品表格组件，接收 cartItems 和 onMutate 两个 props
+/**
+ * 创建购物车商品表格组件，接收 cartItems 和 onMutate 两个 props
+ *
+ * @param {Array} cartItems 购物车商品列表
+ * @param {Function} onMutate 购物车数据变更时的回调函数
+ * @returns {JSX.Element} 返回购物车商品表格组件
+ */
 export default function CartItemTable({ cartItems, onMutate }) {
     // 使用 useMessage hook 获取消息 API 和 contextHolder
     const [messageApi, contextHolder] = useMessage();
@@ -71,8 +76,18 @@ export default function CartItemTable({ cartItems, onMutate }) {
     // 定义表格列
     const columns = [
         {
+            // 表格列标题：封面
+            title: 'Cover',
+            // 数据索引：book
+            dataIndex: 'book',
+            // 列关键字：cover
+            key: 'cover',
+            // 渲染单元格内容为封面图像
+            render: book => <Image src={book.cover} height={50} />
+        },
+        {
             // 表格列标题：书名
-            title: '书名',
+            title: 'Title',
             // 数据索引：book
             dataIndex: 'book',
             // 列关键字：book_title
@@ -82,7 +97,7 @@ export default function CartItemTable({ cartItems, onMutate }) {
         },
         {
             // 表格列标题：数量
-            title: '数量',
+            title: 'Amount',
             // 数据索引：number
             dataIndex: 'number',
             // 列关键字：number
@@ -94,25 +109,25 @@ export default function CartItemTable({ cartItems, onMutate }) {
         },
         {
             // 表格列标题：价格
-            title: '价格',
+            title: 'Price',
             // 数据索引：book
             dataIndex: 'book',
             // 列关键字：book_price
             key: 'book_price',
             // 渲染单元格内容为书籍价格，单位为元
-            render: book => book.price / 100
+            render: book => `${book.price / 100}元`
         },
         {
             // 表格列标题：操作
-            title: '操作',
+            title: 'Action',
             // 不指定数据索引，因为数据索引为空
             dataIndex: '',
             // 列关键字：action
             key: 'action',
             // 渲染单元格内容为删除按钮，并绑定点击事件处理删除商品
-            render: (item) => <Button type="primary" onClick={() => {
+            render: (item) => <Button type="primary" danger onClick={() => {
                 handleDeleteItem(item.id);
-            }}>删除</Button>,
+            }}>Delete</Button>,
         },
     ];
 
@@ -157,10 +172,10 @@ export default function CartItemTable({ cartItems, onMutate }) {
             }))}
         />
         {/* 显示总价 */}
-        <p>总价：{computeTotalPrice()}元</p>
+        <p>Total: {computeTotalPrice()}元</p>
         {/* 下单按钮 */}
         <Button type="primary" disabled={selectedItems.length === 0}
                 onClick={handleOpenModal}
-        >立刻下单</Button>
+        >Place Order</Button>
     </>
 }

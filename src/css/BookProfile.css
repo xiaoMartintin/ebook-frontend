@@ -1,0 +1,91 @@
+/* BookProfile.css */
+
+.card-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    background-color: #ffffff;
+}
+
+.ant-typography {
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    color: #333333;
+}
+
+.ant-divider-horizontal {
+    margin: 12px 0;
+}
+
+.ant-typography h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.ant-space-item {
+    width: 100%;
+}
+
+.ant-pagination {
+    text-align: center;
+}
+
+.book-info {
+    text-align: left;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.book-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.book-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.price-details {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
+.promo-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.promo-details {
+    background-color: #f48484;
+    padding: 4px 10px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 10px;
+}
+
+.promo-warning {
+    display: flex;
+    align-items: center;
+}
+
+.promo-warning .anticon {
+    margin-right: 5px;
+}
+
+.comment-card {
+    font-family: 'PT Serif', serif;
+}
+
+

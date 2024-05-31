@@ -1,5 +1,5 @@
 // 导入所需组件和图标
-import { Space } from "antd";
+import { Space, Button } from "antd";
 import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 // 导入 useEffect 和 useState hook
 import { useEffect, useState } from "react";
@@ -42,13 +42,12 @@ export default function LikeButton({ defaultNumber, liked, onLike, onUnlike }) {
     return (
         <Space size="small">
             {/* 点赞图标 */}
-            <button onClick={handleLikeOrUnlike} style={{ background: "none", border: "none", padding: "0", cursor: "pointer" }}>
+            <Button onClick={handleLikeOrUnlike} type="text" style={{ padding: "0" }}>
                 {/* 根据点赞状态选择显示实心或空心图标 */}
                 {isLiked ? <LikeFilled /> : <LikeOutlined />}
-            </button>
+            </Button>
             {/* 显示点赞数 */}
             {number}
         </Space>
-
     );
 }

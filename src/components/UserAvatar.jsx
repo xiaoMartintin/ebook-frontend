@@ -5,11 +5,12 @@ export default function UsernameAvatar({ username }) {
     return (
         <div style={{
             // 设置样式
-            height: 30, // 高度
-            width: 30, // 宽度
-            borderRadius: 15, // 边框圆角
+            height: 40, // 高度
+            width: 40, // 宽度
+            borderRadius: 20, // 边框圆角
             backgroundColor: '#1DA57A', // 背景颜色
             textAlign: 'center', // 文本居中
+            lineHeight: '40px', // 行高
             fontSize: 18, // 字体大小
             color: 'white', // 字体颜色
         }}>

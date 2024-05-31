@@ -1,11 +1,10 @@
-// HomePage.jsx
-
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Card, Space, Input } from "antd";
+import { Card, Space, Input, Carousel, Row, Col } from "antd";
 import { PrivateLayout } from "../components/layout";
-import BookList from "../components/book_list";
+import BookList from "../components/BookList";
 import { searchBooks } from "../service/book";
+import BookCard from "../components/BookCard"; // 导入BookCard组件
 import "../css/HomePage.css";
 
 // 使用解构赋值直接从 'antd' 的 Input 中提取 Search 组件
@@ -21,7 +20,7 @@ export default function HomePage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const keyword = searchParams.get("keyword") || "";
     const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
-    const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 10;
+    const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 8;
 
     // 异步函数获取书籍数据
     const getBooks = async () => {
@@ -37,7 +36,7 @@ export default function HomePage() {
 
     // 处理搜索事件，重置页码和设置搜索关键词
     const handleSearch = keyword => {
-        setSearchParams({ "keyword": keyword, "pageIndex": 0, "pageSize": 10 });
+        setSearchParams({ "keyword": keyword, "pageIndex": 0, "pageSize": 8 });
     };
 
     // 处理页面改变事件
@@ -58,6 +57,32 @@ export default function HomePage() {
                         className="search-input"
                         style={{ fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}
                     />
+                    {books.length > 0 && (
+                        <Carousel
+                            autoplay
+                            autoplaySpeed={1500} // 设置播放速率为1.5秒
+                            dots={true} // 显示轮播点
+                            className="book-carousel"
+                        >
+                            {books.slice(0, 5).map(book => (
+                                <div key={book.id} className="carousel-item">
+                                    <Row gutter={16}>
+                                        <Col span={8}>
+                                            <BookCard book={book} />
+                                        </Col>
+                                        <Col span={16}>
+                                            <div className="book-info">
+                                                <h2>{book.title}</h2>
+                                                <p>{book.description}</p>
+                                                <p><strong>Author:</strong> {book.author}</p>
+                                                <p><strong>Price:</strong> {book.price / 100}元</p>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            ))}
+                        </Carousel>
+                    )}
                     <BookList
                         books={books}
                         pageSize={pageSize}

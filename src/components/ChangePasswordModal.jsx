@@ -1,5 +1,5 @@
 // 导入所需组件和方法
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, Row, Col } from "antd";
 import React from "react";
 import useMessage from "antd/es/message/useMessage"; // 使用消息提示 hook
 import { handleBaseApiResponse } from "../utils/message"; // 导入处理基本 API 响应的方法
@@ -19,18 +19,18 @@ export default function ChangePasswordModal({
     const handleSubmit = async ({ password, confirm }) => {
         // 检查是否填写完整信息
         if (!password || !confirm) {
-            messageApi.error("请填写完整信息！");
+            messageApi.error("Please fill in all required fields!");
             return;
         }
         // 检查新密码和确认新密码是否一致
         if (password !== confirm) {
-            messageApi.error("新密码和确认新密码不一致！");
+            messageApi.error("The new password and confirmation do not match!");
             return;
         }
         // 构造请求体
         let request = {
             password
-        }
+        };
         // 发送修改密码请求
         let res = await changePassword(request);
         // 处理修改密码响应
@@ -39,12 +39,21 @@ export default function ChangePasswordModal({
 
     return (
         <Modal
-            title={"修改密码"} // 模态框标题
+            title={
+                <Row align="middle" justify="center">
+                    <Col>
+                        <img src={process.env.PUBLIC_URL + '/logo512.png'} alt="Logo" style={{ height: "50px", marginRight: "10px" }} />
+                    </Col>
+                    <Col>
+                        <h2 style={{ margin: 0, fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}>Change Password</h2>
+                    </Col>
+                </Row>
+            } // 模态框标题
             visible={true} // 是否可见
-            onOk={onOk} // 点击确定的回调函数
             onCancel={onCancel} // 点击取消的回调函数
             footer={null} // 不显示底部按钮
-            width={800} // 宽度
+            width={600} // 宽度
+            centered // 模态框居中显示
         >
             {contextHolder} {/* 显示消息提示 */}
             {/* 密码修改表单 */}
@@ -57,23 +66,25 @@ export default function ChangePasswordModal({
                 {/* 新密码输入框 */}
                 <Form.Item
                     name="password"
-                    label="新密码"
+                    label="New Password"
                     required
+                    rules={[{ required: true, message: 'Please enter the new password!' }]} // 验证规则
                 >
-                    <Password placeholder="请输入新密码" />
+                    <Password placeholder="Enter new password" />
                 </Form.Item>
                 {/* 确认新密码输入框 */}
                 <Form.Item
                     name="confirm"
-                    label="确认新密码"
+                    label="Confirm New Password"
                     required
+                    rules={[{ required: true, message: 'Please confirm the new password!' }]} // 验证规则
                 >
-                    <Password placeholder="请再次输入新密码" />
+                    <Password placeholder="Confirm new password" />
                 </Form.Item>
                 {/* 提交按钮 */}
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        提交
+                    <Button type="primary" htmlType="submit" style={{ width: "100%", borderRadius: "8px" }}>
+                        Submit
                     </Button>
                 </Form.Item>
             </Form>

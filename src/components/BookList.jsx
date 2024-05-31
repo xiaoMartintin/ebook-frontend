@@ -1,5 +1,7 @@
+// BookList.jsx
+
 import { List, Pagination, Space } from "antd";
-import BookCard from "./book_card";
+import BookCard from "./BookCard";
 
 /**
  * 书籍列表组件
@@ -10,6 +12,7 @@ import BookCard from "./book_card";
  * @param {function} onPageChange - 页码改变时的回调函数
  */
 export default function BookList({ books, pageSize, current, total, onPageChange }) {
+    const columns = books.length < 4 ? books.length : 4; // 根据书籍数量动态设置列数
     // 返回书籍列表和分页组件
     return (
         // 使用 Space 组件设置垂直方向的间距和居中对齐
@@ -19,7 +22,7 @@ export default function BookList({ books, pageSize, current, total, onPageChange
                 // 设置列表项之间的间距和列数
                 grid={{
                     gutter: 16,
-                    column: 5
+                    column: columns
                 }}
                 // 将书籍列表映射为带有 key 属性的新数组
                 dataSource={books.map(book => ({
