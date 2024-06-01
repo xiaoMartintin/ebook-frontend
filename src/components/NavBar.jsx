@@ -87,7 +87,7 @@ export default function NavBar({ user }) {
             </Menu>
             {user && (
                 <Menu mode="vertical" className="user-menu">
-                    <Menu.Item key="nickname" disabled>
+                    <Menu.Item key="nickname" onClick={() => navigate('/profile')}>
                         <UserOutlined />
                         {user.nickname}
                     </Menu.Item>

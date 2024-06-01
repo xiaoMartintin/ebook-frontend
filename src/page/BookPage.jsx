@@ -74,8 +74,9 @@ export default function BookPage() {
                 icon={<ArrowLeftOutlined />}
                 onClick={() => navigate('/')}
                 style={{
-                    marginBottom: '5px',
-                    marginTop: '10px',
+                    marginBottom: '1px',
+                    marginTop: '20px',
+                    marginLeft: '20px',
                     fontFamily: "'PT Serif', 'Helvetica', sans-serif",
                     backgroundColor: '#00A3D9',
                     borderColor: '#00A3D9',
@@ -85,13 +86,7 @@ export default function BookPage() {
             >
                 Back to Home
             </Button>
-            <Input.Search
-                placeholder="Enter Keyword"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                enterButton={<Button type="primary" icon={<SearchOutlined />} />}
-                style={{ marginBottom: '20px' }}
-            />
+
             {book && comments && (
                 <BookProfile
                     pageIndex={pageIndex}

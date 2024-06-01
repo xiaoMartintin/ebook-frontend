@@ -1,0 +1,31 @@
+.user-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.user-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #00A3D9;
+}
+
+.user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ant-upload-picture-card-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.user-form {
+    padding: 20px;
+}
+
+.ant-form-item {
+    margin-bottom: 16px;
+}
