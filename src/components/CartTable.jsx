@@ -54,7 +54,7 @@ export default function CartItemTable({ cartItems, onMutate }) {
         const prices = selectedItems.map(item => item.book.price * item.number);
         // 返回总价，单位为元
         return prices.length > 0 ?
-            prices.reduce((prev, cur) => prev + cur) / 100 : 0;
+            prices.reduce((prev, cur) => prev + cur) : 0;
     }
 
     // 处理商品数量变化
@@ -115,7 +115,7 @@ export default function CartItemTable({ cartItems, onMutate }) {
             // 列关键字：book_price
             key: 'book_price',
             // 渲染单元格内容为书籍价格，单位为元
-            render: book => `${book.price / 100}元`
+            render: book => `${book.price}元`
         },
         {
             // 表格列标题：操作

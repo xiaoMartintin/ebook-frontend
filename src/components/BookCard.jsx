@@ -29,7 +29,7 @@ export default function BookCard({ book }) {
                         <div className="book-card-meta">
                             <p className="book-author">{`Author: ${book.author}`}</p> {/* 显示书籍的作者 */}
                             <p>
-                                <span>{`Price: ${book.price / 100}元`}</span> {/* 显示书籍的价格，并将价格单位从分转换为元 */}
+                                <span>{`Price: ${book.price}元`}</span> {/* 显示书籍的价格，并将价格单位从分转换为元 */}
                                 <span>{`Sales: ${book.sales}`}</span> {/* 显示书籍的销量 */}
                             </p>
 

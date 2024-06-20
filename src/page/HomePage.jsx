@@ -24,9 +24,15 @@ export default function HomePage() {
 
     // 异步函数获取书籍数据
     const getBooks = async () => {
-        const pagedBooks = await searchBooks(keyword, pageIndex, pageSize);
-        setBooks(pagedBooks.items);
-        setTotalPage(pagedBooks.total);
+        try {
+            const pagedBooks = await searchBooks(keyword, pageIndex, pageSize);
+            setBooks(pagedBooks.items || []); // 确保 books 总是一个数组
+            setTotalPage(pagedBooks.total || 0); // 确保 totalPage 总是一个数字
+        } catch (error) {
+            console.error("Failed to fetch books:", error);
+            setBooks([]); // 在错误情况下设置 books 为一个空数组
+            setTotalPage(0); // 在错误情况下设置 totalPage 为 0
+        }
     };
 
     // 使用 useEffect 钩子来监听依赖变化并触发书籍数据的获取
@@ -75,7 +81,7 @@ export default function HomePage() {
                                                 <h2>{book.title}</h2>
                                                 <p>{book.description}</p>
                                                 <p><strong>Author:</strong> {book.author}</p>
-                                                <p><strong>Price:</strong> {book.price / 100}元</p>
+                                                <p><strong>Price:</strong> {book.price}元</p>
                                             </div>
                                         </Col>
                                     </Row>
@@ -86,7 +92,7 @@ export default function HomePage() {
                     <BookList
                         books={books}
                         pageSize={pageSize}
-                        total={totalPage * pageSize}
+                        total={totalPage}
                         current={pageIndex + 1}
                         onPageChange={handlePageChange}
                         className="book-list"

@@ -32,7 +32,6 @@ export default function NavBar({ user }) {
         { label: "CART", value: "/cart" },
         { label: "ORDER", value: "/order" },
         { label: "RANKING", value: "/rank" },
-        { label: "API DOCS", value: "/api-docs" }
     ];
 
     const navMenuItems = navItems.map(item => ({
@@ -97,7 +96,7 @@ export default function NavBar({ user }) {
                     </Menu.Item>
                     <Menu.Item key="balance" disabled>
                         <AccountBookOutlined />
-                        余额：{user.balance / 100}元
+                        余额：{user.balance}元
                     </Menu.Item>
                     <Dropdown menu={{ items: dropMenuItems }} trigger={['click']}>
                         <Menu.Item key="more" className="dropdown-menu">

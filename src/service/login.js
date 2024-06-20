@@ -1,19 +1,30 @@
-// 导入通用函数和变量，PREFIX 用于API的基础URL，post 为封装的POST请求方法
-import { PREFIX, post } from "./common";
+import { DUMMY_RESPONSE } from "./common";
+import { users } from "./userData"; // 新增
 
-// 定义并导出一个异步函数 login，用于处理用户登录
 export async function login(username, password) {
-    // 构建API的完整URL
-    const url = `${PREFIX}/login`;
-
-    // 初始化结果变量
     let result;
 
     try {
-        // 使用 post 方法发送登录请求，包括用户名和密码
-        result = await post(url, { username, password });
+        // 前端进行用户名和密码比对
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user) {
+            result = {
+                ok: true,
+                message: "登录成功！",
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    nickname: user.nickname,
+                }
+            };
+        } else {
+            result = {
+                ok: false,
+                message: "用户名或密码错误！",
+            };
+        }
     } catch (e) {
-        // 如果请求过程中发生错误，输出错误到控制台，并设置结果为失败消息
         console.log(e);
         result = {
             ok: false,
@@ -21,6 +32,5 @@ export async function login(username, password) {
         };
     }
 
-    // 返回请求结果，包含登录成功或失败的状态和消息
     return result;
 }

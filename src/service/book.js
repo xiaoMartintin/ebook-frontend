@@ -4,18 +4,28 @@ import { DUMMY_RESPONSE, PREFIX, getJson, post } from "./common";
  * 根据关键字搜索书籍，并进行分页。
  * 发送 GET 请求到服务器以搜索书籍，包括分页参数。
  *
+ * 当关键字为空时，应获取所有书籍
  * @param {string} keyword 搜索关键词。
  * @param {number} pageIndex 当前页码。
  * @param {number} pageSize 每页显示的数量。
  * @returns {Promise<object>} 返回书籍列表及总数，或在错误时返回默认值。
  */
+
 export async function searchBooks(keyword, pageIndex, pageSize) {
     const url = `${PREFIX}/books?keyword=${encodeURIComponent(keyword)}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
     try {
-        return await getJson(url);
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error("Failed to fetch books");
+        }
+        const data = await response.json();
+        return {
+            items: data.items || [],
+            total: data.total || 0
+        };
     } catch (e) {
         console.log(e);
-        return { total: 0, items: [] }; // 出错时返回空列表和总数为0
+        return { items: [], total: 0 }; // 出错时返回空列表和总数为0
     }
 }
 

@@ -15,7 +15,7 @@ const { Title, Paragraph } = Typography;
 
 function BookDetails({ book, onAddCartItem }) {
     // 价格格式化，单位由分转换为元，并保留两位小数
-    const formattedPrice = (book.price / 100).toFixed(2);
+    const formattedPrice = (book.price).toFixed(2);
 
     return (
         <Row gutter={32}>

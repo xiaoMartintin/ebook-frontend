@@ -1,26 +1,26 @@
-// 导入 React 库
 import React from "react";
-// 导入 Ant Design 所需的图标和组件
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import { BasicLayout } from "../components/layout";
-// 导入登录服务和消息处理函数
 import { login } from "../service/login";
 import { handleBaseApiResponse } from "../utils/message";
 
-// 登录页面组件
 const LoginPage = () => {
-    const [messageApi, contextHolder] = message.useMessage(); // 使用消息钩子来处理反馈信息
-    const navigate = useNavigate(); // 使用导航钩子来处理路由跳转
+    const [messageApi, contextHolder] = message.useMessage();
+    const navigate = useNavigate();
 
-    // 提交表单的事件处理函数
     const onSubmit = async (values) => {
         const { username, password } = values;
 
-        const res = await login(username, password); // 调用登录服务
-        handleBaseApiResponse(res, messageApi, () => navigate("/")); // 处理响应
+        const res = await login(username, password);
+        if (res.ok) {
+            messageApi.success(res.message);
+            navigate("/"); // 登录成功后重定向到主页或图书浏览页面
+        } else {
+            messageApi.error(res.message); // 登录失败时显示错误消息
+        }
     };
 
     return (
@@ -34,13 +34,13 @@ const LoginPage = () => {
                 backgroundImage: `url(${process.env.PUBLIC_URL + '/login.png'})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                fontFamily: "'PT Serif', 'Helvetica', sans-serif" // 设置字体
+                fontFamily: "'PT Serif', 'Helvetica', sans-serif"
             }}>
                 <LoginForm
-                    logo={process.env.PUBLIC_URL + '/logo512.png'}  // 网站LOGO
-                    title="eBookStore"  // 网站名称
-                    subTitle="电子书城"  // 网站副标题
-                    onFinish={onSubmit}  // 表单提交事件绑定
+                    logo={process.env.PUBLIC_URL + '/logo512.png'}
+                    title="eBookStore"
+                    subTitle="电子书城"
+                    onFinish={onSubmit}
                     formProps={{
                         layout: 'vertical',
                         size: 'large',
@@ -58,19 +58,19 @@ const LoginPage = () => {
                         name="username"
                         fieldProps={{
                             size: 'large',
-                            prefix: <UserOutlined className={'prefixIcon'} />,  // 用户名输入框前缀图标
+                            prefix: <UserOutlined className={'prefixIcon'} />,
                         }}
-                        placeholder={'Enter Username'}  // 输入框占位符
-                        rules={[{ required: true, message: 'Enter Username!' }]}  // 输入验证规则
+                        placeholder={'Enter Username'}
+                        rules={[{ required: true, message: 'Enter Username!' }]}
                     />
                     <ProFormText.Password
                         name="password"
                         fieldProps={{
                             size: 'large',
-                            prefix: <LockOutlined className={'prefixIcon'} />,  // 密码输入框前缀图标
+                            prefix: <LockOutlined className={'prefixIcon'} />,
                         }}
-                        placeholder={'Enter Password'}  // 输入框占位符
-                        rules={[{ required: true, message: 'Enter Password!' }]}  // 输入验证规则
+                        placeholder={'Enter Password'}
+                        rules={[{ required: true, message: 'Enter Password!' }]}
                     />
 
                     <div style={{ marginBlockEnd: 24, width: '100%', textAlign: 'center' }}>
@@ -83,5 +83,4 @@ const LoginPage = () => {
     );
 };
 
-// 导出 LoginPage 组件
 export default LoginPage;
