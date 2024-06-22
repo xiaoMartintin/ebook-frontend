@@ -13,14 +13,8 @@ const LoginPage = () => {
 
     const onSubmit = async (values) => {
         const { username, password } = values;
-
         const res = await login(username, password);
-        if (res.ok) {
-            messageApi.success(res.message);
-            navigate("/"); // 登录成功后重定向到主页或图书浏览页面
-        } else {
-            messageApi.error(res.message); // 登录失败时显示错误消息
-        }
+        handleBaseApiResponse(res, messageApi, () => navigate("/"));
     };
 
     return (
@@ -74,8 +68,8 @@ const LoginPage = () => {
                     />
 
                     <div style={{ marginBlockEnd: 24, width: '100%', textAlign: 'center' }}>
-                        <Link to='/register' style={{ marginRight: '10px' }}>New Account? Register </Link>
-                        <a href="#/">     Forgot password? </a>
+                        <Link to='/register' style={{ marginRight: '10px' }}>New Account? Register</Link>
+                        <a href="#/">Forgot password?</a>
                     </div>
                 </LoginForm>
             </div>

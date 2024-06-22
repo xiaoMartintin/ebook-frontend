@@ -1,36 +1,17 @@
-import { DUMMY_RESPONSE } from "./common";
-import { users } from "./userData"; // 新增
+import { PREFIX, post } from "./common";
 
 export async function login(username, password) {
+    const url = `${PREFIX}/login`;
     let result;
 
     try {
-        // 前端进行用户名和密码比对
-        const user = users.find(u => u.username === username && u.password === password);
-        if (user) {
-            result = {
-                ok: true,
-                message: "登录成功！",
-                user: {
-                    id: user.id,
-                    username: user.username,
-                    email: user.email,
-                    nickname: user.nickname,
-                }
-            };
-        } else {
-            result = {
-                ok: false,
-                message: "用户名或密码错误！",
-            };
-        }
+        result = await post(url, { username, password });
     } catch (e) {
         console.log(e);
         result = {
             ok: false,
             message: "网络错误！",
-        };
+        }
     }
-
     return result;
 }
