@@ -12,14 +12,17 @@ import "../css/CartPage.css";
  *
  * @returns {JSX.Element} 返回购物车页面的布局。
  */
-
 export default function CartPage() {
     const [cartItems, setCartItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
     const initCartItems = async () => {
-        const items = await getCartItems();
-        setCartItems(items);
+        const response = await getCartItems();
+        if (response.ok) {
+            setCartItems(response.data);
+        } else {
+            console.error(response.message);
+        }
     };
 
     useEffect(() => {
@@ -50,4 +53,3 @@ export default function CartPage() {
         </PrivateLayout>
     );
 }
-

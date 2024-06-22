@@ -20,7 +20,7 @@ export default function OrderPage() {
     // 异步函数获取订单数据，并更新状态
     const initOrders = async () => {
         const fetchedOrders = await getOrders(); // 调用服务端API获取订单数据
-        setOrders(fetchedOrders); // 将获取的订单数据设置到状态中
+        setOrders(fetchedOrders.data || []); // 确保 orders 是一个数组
     };
 
     // 使用 useEffect 钩子在组件加载时初始化订单数据
@@ -34,7 +34,7 @@ export default function OrderPage() {
     };
 
     // 根据搜索词过滤订单项目
-    const filteredOrders = orders.filter(order =>
+    const filteredOrders = (orders || []).filter(order =>
         order.receiver.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.address.toLowerCase().includes(searchTerm.toLowerCase())
     );

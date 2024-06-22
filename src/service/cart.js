@@ -36,8 +36,8 @@ export async function addCartItem(bookId) {
     return response;
 }
 
-export async function changeCartItemNumber(id, number) {
-    const url = `${PREFIX}/cart/${id}?number=${number}`;
+export async function changeCartItemQuantity(id, quantity) {
+    const url = `${PREFIX}/cart/${id}?quantity=${quantity}`;
     let response;
     try {
         response = await put(url);

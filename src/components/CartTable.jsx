@@ -1,5 +1,5 @@
 import { List, Space, Table, Image, Button, InputNumber, Row, Col } from "antd";
-import { changeCartItemNumber, deleteCartItem } from "../service/cart";
+import { changeCartItemQuantity, deleteCartItem } from "../service/cart";
 import useMessage from "antd/es/message/useMessage";
 import { handleBaseApiResponse } from "../utils/message";
 import { useEffect, useState } from "react";
@@ -51,22 +51,22 @@ export default function CartItemTable({ cartItems, onMutate }) {
     // 计算选中商品的总价格
     const computeTotalPrice = () => {
         // 计算每个选中商品的价格，并累加
-        const prices = selectedItems.map(item => item.book.price * item.number);
+        const prices = selectedItems.map(item => item.book.price * item.quantity);
         // 返回总价，单位为元
         return prices.length > 0 ?
             prices.reduce((prev, cur) => prev + cur) : 0;
     }
 
     // 处理商品数量变化
-    const handleNumberChange = async (id, number) => {
+    const handleQuantityChange = async (id, quantity) => {
         // 调用改变商品数量的服务方法
-        let res = await changeCartItemNumber(id, number);
+        let res = await changeCartItemQuantity(id, quantity);
         if (res.ok) {
             // 更新商品数量
-            items.filter(item => item.id === id)[0].number = number;
+            items.filter(item => item.id === id)[0].quantity = quantity;
             let selected = selectedItems.find(item => item.id === id);
             if (selected) {
-                selected.number = number;
+                selected.quantity= quantity;
                 setSelectedItems([...selectedItems]);
             }
             setItems([...items]);
@@ -98,13 +98,13 @@ export default function CartItemTable({ cartItems, onMutate }) {
         {
             // 表格列标题：数量
             title: 'Amount',
-            // 数据索引：number
-            dataIndex: 'number',
-            // 列关键字：number
-            key: 'number',
+            // 数据索引：quantity
+            dataIndex: 'quantity',
+            // 列关键字：quantity
+            key: 'quantity',
             // 渲染单元格内容为输入框，可输入数量，最小为1
-            render: (number, item) => <InputNumber min={1} defaultValue={number} value={item.value} onChange={(newNumber) => {
-                handleNumberChange(item.id, newNumber);
+            render: (quantity, item) => <InputNumber min={1} defaultValue={quantity} value={item.value} onChange={(newQuantity) => {
+                handleQuantityChange(item.id, newQuantity);
             }} />
         },
         {
