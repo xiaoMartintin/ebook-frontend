@@ -5,11 +5,12 @@ export async function getCartItems() {
     let cartItems;
     try {
         cartItems = await getJson(url);
+        console.log("Fetched cart items from API:", cartItems); // 添加调试信息
     } catch (e) {
         console.log(e);
-        cartItems = []
+        cartItems = [];
     }
-    return cartItems;
+    return Array.isArray(cartItems.data) ? cartItems.data : []; // 确保返回一个数组，并提取data字段
 }
 
 export async function deleteCartItem(id) {

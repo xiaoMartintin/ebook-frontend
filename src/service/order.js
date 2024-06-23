@@ -4,7 +4,7 @@ export async function placeOrder(orderInfo) {
     const url = `${PREFIX}/order`;
     let res;
     try {
-        res = post(url, orderInfo);
+        res = await post(url, orderInfo);
     } catch (e) {
         console.log(e);
         res = DUMMY_RESPONSE;
@@ -14,12 +14,18 @@ export async function placeOrder(orderInfo) {
 
 export async function getOrders() {
     const url = `${PREFIX}/order`;
-    let orders;
+    let response;
     try {
-        orders = await getJson(url);
+        response = await getJson(url);
     } catch (e) {
         console.log(e);
-        orders = []
+        response = DUMMY_RESPONSE;
     }
-    return orders;
+
+    // 确保返回的是订单数组
+    if (response.ok && Array.isArray(response.data)) {
+        return response.data;
+    } else {
+        return [];
+    }
 }

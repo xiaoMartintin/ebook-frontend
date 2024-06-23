@@ -17,12 +17,9 @@ export default function CartPage() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const initCartItems = async () => {
-        const response = await getCartItems();
-        if (response.ok) {
-            setCartItems(response.data);
-        } else {
-            console.error(response.message);
-        }
+        const fetchedCartItems = await getCartItems();
+        setCartItems(fetchedCartItems); // 确保 cartItems 是一个数组
+        console.log("Cart items state after fetch:", fetchedCartItems); // 打印更新后的状态
     };
 
     useEffect(() => {
@@ -33,7 +30,7 @@ export default function CartPage() {
         setSearchTerm(e.target.value);
     };
 
-    const filteredItems = cartItems.filter(item =>
+    const filteredItems = (cartItems || []).filter(item =>
         item.book.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 

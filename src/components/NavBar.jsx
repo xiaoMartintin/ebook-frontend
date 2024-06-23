@@ -1,4 +1,3 @@
-// 导入所需组件和图标
 import { Menu, Layout, Avatar, Dropdown, Row, Col } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -7,23 +6,19 @@ import {
     AccountBookOutlined,
     FormOutlined
 } from '@ant-design/icons';
-// 导入登出服务方法和消息提示 hook
 import { logout } from "../service/logout";
 import useMessage from "antd/es/message/useMessage";
-// 导入处理基本 API 响应的方法和 useState hook
 import { handleBaseApiResponse } from "../utils/message";
 import { useState } from "react";
-// 导入修改密码模态框组件
 import ChangePasswordModal from "./ChangePasswordModal";
-import '../css/NavBar.css'; // 导入自定义样式
+import '../css/NavBar.css';
 
 const { Sider } = Layout;
 
-// 导航栏组件
 export default function NavBar({ user }) {
-    const [showModal, setShowModal] = useState(false); // 是否显示修改密码模态框
-    const navigate = useNavigate(); // 获取导航函数
-    const location = useLocation(); // 获取当前路径
+    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
     const parts = location.pathname.split('/');
     const selectedKey = '/' + parts[parts.length - 1];
 
@@ -64,13 +59,17 @@ export default function NavBar({ user }) {
         }
     };
 
-    const dropMenuItems = [
-        { key: "/logout", label: "LOG OUT", icon: <LogoutOutlined />, danger: true }
-    ];
+    const dropMenuItems = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="/logout" icon={<LogoutOutlined />} danger>
+                LOG OUT
+            </Menu.Item>
+        </Menu>
+    );
 
     return (
         <Sider className="navbar-sider" width={200} theme="light">
-            {contextHolder} {/* 显示消息提示 */}
+            {contextHolder}
             <Menu
                 mode="vertical"
                 defaultSelectedKeys={[selectedKey]}
@@ -98,7 +97,7 @@ export default function NavBar({ user }) {
                         <AccountBookOutlined />
                         余额：{user.balance}元
                     </Menu.Item>
-                    <Dropdown menu={{ items: dropMenuItems }} trigger={['click']}>
+                    <Dropdown overlay={dropMenuItems} trigger={['click']}>
                         <Menu.Item key="more" className="dropdown-menu">
                             ...
                         </Menu.Item>

@@ -1,7 +1,5 @@
-// 导入 Table 组件和订单商品列表组件
 import { Table, Tag, Space } from "antd";
-import OrderItemList from "./OrderList";
-// 导入时间格式化函数
+import OrderItemList from "./OrderItemList";
 import { formatTime } from "../utils/time";
 
 // 订单表格组件
@@ -16,7 +14,7 @@ export default function OrderTable({ orders }) {
         { title: 'Address', dataIndex: 'address', key: 'address', },
         // 下单时间列
         {
-            title: 'Order Time', dataIndex: 'createdAt', key: 'createdAt',
+            title: 'Order Time', dataIndex: 'time', key: 'time',
             // 格式化时间
             render: (time) => <Tag color="blue">{formatTime(time)}</Tag>
         },
@@ -31,7 +29,7 @@ export default function OrderTable({ orders }) {
                 // 渲染展开内容
                 expandedRowRender: (order) => (
                     // 调用订单商品列表组件，并传入订单商品项
-                    <OrderItemList orderItems={order.items} />
+                    <OrderItemList orderItems={order.orderItems} />
                 ),
                 rowExpandable: (record) => record.name !== 'Not Expandable',
             }}

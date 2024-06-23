@@ -20,7 +20,17 @@ export default function OrderPage() {
     // 异步函数获取订单数据，并更新状态
     const initOrders = async () => {
         const fetchedOrders = await getOrders(); // 调用服务端API获取订单数据
-        setOrders(fetchedOrders.data || []); // 确保 orders 是一个数组
+        console.log("Fetched orders:", fetchedOrders);
+
+        // 对订单数据进行必要的格式化
+        const formattedOrders = fetchedOrders.map(order => ({
+            ...order,
+            createdAt: new Date(order.time).toLocaleString(), // 格式化时间
+            items: order.orderItems // 确保 orderItems 在 orders 中
+        }));
+
+        setOrders(formattedOrders); // 确保 orders 是一个数组
+        console.log("Orders state after fetch:", formattedOrders); // 打印更新后的状态
     };
 
     // 使用 useEffect 钩子在组件加载时初始化订单数据
