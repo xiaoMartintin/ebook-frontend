@@ -1,5 +1,3 @@
-/* BookProfile.css */
-
 .card-container {
     padding: 20px;
     border-radius: 10px;
@@ -15,11 +13,39 @@
 
 .ant-divider-horizontal {
     margin: 12px 0;
+    background-color: #00A3D9; /* 修改分割线颜色 */
+    height: 2px;
+    position: relative;
+    text-align: center;
+}
+
+.ant-divider-horizontal::before {
+    content: ' ';
+    display: block;
+    border-top: 2px solid #00A3D9;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+}
+
+.ant-divider-horizontal .ant-divider-inner-text {
+    padding: 0 5px;
+    background: #ffffff;
+    z-index: 2;
 }
 
 .ant-typography h2 {
-    font-size: 24px;
-    margin-bottom: 16px;
+    font-size: 30px;
+    margin-bottom: 27px; /* 调整标题和分割线之间的间距 */
+    color: #005f8d;
+}
+
+.ant-typography h3 {
+    font-size: 20px; /* 调整标题字体大小 */
+    color: #00A3D9; /* 使用主题色 */
+    margin-bottom: 8px; /* 调整标题和内容之间的间距 */
 }
 
 .ant-space-item {
@@ -33,16 +59,16 @@
 .book-info {
     text-align: left;
     font-family: 'PT Serif', 'Helvetica', sans-serif;
-}
-
-.book-info h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    background-color: #e6f7ff; /* 浅蓝色背景 */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 16px; /* 调整内容之间的间距 */
 }
 
 .book-info p {
     margin: 5px 0;
     font-size: 16px;
+    color: #00A3D9;
 }
 
 .price-info {
@@ -87,5 +113,3 @@
 .comment-card {
     font-family: 'PT Serif', serif;
 }
-
-

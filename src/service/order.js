@@ -12,8 +12,10 @@ export async function placeOrder(orderInfo) {
     return res;
 }
 
-export async function getOrders() {
-    const url = `${PREFIX}/order`;
+
+export async function getOrders(filters = {}) {
+    const { keyword, startDate, endDate } = filters;
+    const url = `${PREFIX}/order?keyword=${keyword || ''}&startDate=${startDate || ''}&endDate=${endDate || ''}`;
     let response;
     try {
         response = await getJson(url);
@@ -22,7 +24,6 @@ export async function getOrders() {
         response = DUMMY_RESPONSE;
     }
 
-    // 确保返回的是订单数组
     if (response.ok && Array.isArray(response.data)) {
         return response.data;
     } else {

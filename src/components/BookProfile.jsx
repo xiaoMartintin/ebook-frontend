@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Image, Row, Space, Typography, Divider } from 'antd';
+import { Button, Col, Image, Row, Space, Typography, Divider, message } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import "../css/BookProfile.css";
 import { Card, Pagination, Tabs } from "antd";
@@ -10,12 +10,16 @@ import BookCommentList from "./BookCommentList";
 import CommentInput from "./WriteComment";
 import { addBookComment } from "../service/book";
 
-
 const { Title, Paragraph } = Typography;
 
 function BookDetails({ book, onAddCartItem }) {
     // 价格格式化，单位由分转换为元，并保留两位小数
     const formattedPrice = (book.price).toFixed(2);
+
+    const handleBuyNow = async () => {
+        await onAddCartItem();
+        message.info("This feature is not available, the item has been added to your cart.");
+    };
 
     return (
         <Row gutter={32}>
@@ -25,29 +29,38 @@ function BookDetails({ book, onAddCartItem }) {
             <Col span={14}>
                 <Typography>
                     <Title level={2}>{book.title}</Title>
-                    <Divider orientation="left">基本信息</Divider>
-                    <Space direction="vertical" size="middle">
-                        <Paragraph>
-                            <strong>作者：</strong>{book.author}
-                        </Paragraph>
-                        <Paragraph>
-                            <strong>销量：</strong>{book.sales}
-                        </Paragraph>
-                    </Space>
-                    <Divider orientation="left">作品简介</Divider>
-                    <div style={{ backgroundColor: "#e6f7ff", padding: "20px", borderRadius: "10px" }}>
+                    <Divider orientation="left" className="ant-divider-horizontal" style={{ fontSize: "16px", color: "#00A3D9" }}><span className="ant-divider-inner-text">基本信息</span></Divider>
+                    <div className="book-info" >
+                        <Space direction="vertical" size="middle">
+                            <Paragraph>
+                                <strong>isbn：</strong>{book.isbn}
+                            </Paragraph>
+                            <Paragraph>
+                                <strong>作者：</strong>{book.author}
+                            </Paragraph>
+                            <Paragraph>
+                                <strong>销量：</strong>{book.sales}
+                            </Paragraph>
+                            <Paragraph>
+                                <strong>库存：</strong>{book.inventory}
+                            </Paragraph>
+
+                        </Space>
+                    </div>
+                    <Divider orientation="left" className="ant-divider-horizontal" style={{ fontSize: "16px", color: "#00A3D9" }}><span className="ant-divider-inner-text">作品简介</span></Divider>
+                    <div className="book-info">
                         <Paragraph>{book.description}</Paragraph>
                     </div>
-                    <Divider orientation="left">购买选项</Divider>
+                    <Divider orientation="left" className="ant-divider-horizontal" style={{ fontSize: "16px", color: "#00A3D9" }}><span className="ant-divider-inner-text">购买选项</span></Divider>
                     <div className="price-info">
                         <div className="price-details">
-                            <div style={{ fontSize: "30px", color: "#dd3735" }}>¥{formattedPrice}</div>
-                            <div style={{ fontSize: "18px", color: "#dd3735", marginLeft: "10px" }}>（7折）</div>
+                            <div style={{ fontSize: "30px", color: "#00A3D9" }}>¥{formattedPrice}</div>
+                            <div style={{ fontSize: "18px", color: "#00A3D9", marginLeft: "10px" }}>（7折）</div>
                         </div>
                         <div className="promo-section">
                             <div className="promo-details">店铺促销</div>
                             <Paragraph type="secondary" className="promo-text" style={{ marginBottom: 0 }}>
-                                满¥18减¥1，满¥48减¥3，满¥98减¥5，满¥198减¥10
+                                满¥18减¥0，满¥48减¥0，满¥98减¥0，满¥198减¥0
                             </Paragraph>
                         </div>
                         <div className="promo-warning">
@@ -58,7 +71,7 @@ function BookDetails({ book, onAddCartItem }) {
                         </div>
                         <Space size="middle" style={{ marginTop: '10px', justifyContent: 'center' }}>
                             <Button size="large" onClick={onAddCartItem}>加入购物车</Button>
-                            <Button type="primary" size="large">立即购买</Button>
+                            <Button type="primary" onClick={handleBuyNow} size="large">立即购买</Button>
                         </Space>
                     </div>
                 </Typography>
@@ -66,8 +79,6 @@ function BookDetails({ book, onAddCartItem }) {
         </Row>
     );
 }
-
-
 
 /**
  * 书籍信息卡片组件，包含书籍详情、评论列表和添加评论功能。
@@ -114,7 +125,7 @@ export default function BookProfile({
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
                 {/* 书籍详情组件 */}
                 <BookDetails book={book} onAddCartItem={handleAddCartItem} />
-                <Divider>书籍评论</Divider>
+                <Divider orientation="middle" className="ant-divider-horizontal" style={{ fontSize: "16px", color: "#00A3D9" }}><span className="ant-divider-inner-text">书籍评论</span></Divider>
                 {/* 评论排序选项卡 */}
                 <Tabs
                     items={tabItems}

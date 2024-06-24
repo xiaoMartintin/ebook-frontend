@@ -5,7 +5,7 @@
     font-family: 'PT Serif', 'Helvetica', sans-serif;
 }
 
-.order-title {
+.statistics-title {
     font-size: 24px;
     font-weight: bold;
     color: #00A3D9;
@@ -17,10 +17,11 @@
     width: 100%;
 }
 
-.search-button {
-    width: 100%; /* 使按钮占满水平空间 */
-    text-align: center; /* 使按钮内的文本和图标居中 */
+.statistics-summary {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
 }

@@ -27,6 +27,7 @@ export default function NavBar({ user }) {
         { label: "CART", value: "/cart" },
         { label: "ORDER", value: "/order" },
         { label: "RANKING", value: "/rank" },
+        { label: "STATISTICS", value: "/statistics" }
     ];
 
     const navMenuItems = navItems.map(item => ({

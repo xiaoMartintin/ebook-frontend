@@ -1,11 +1,9 @@
-/* BookCard.css */
-
 .book-card {
     font-family: 'PT Serif', 'Helvetica', sans-serif;
     transition: transform 0.3s, box-shadow 0.3s;
-    width: 100%; /* 确保卡片宽度一致 */
-    max-width: 300px; /* 设置最大宽度 */
-    margin: 0 auto; /* 水平居中 */
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .book-card:hover {
@@ -15,36 +13,49 @@
 
 .book-card-meta {
     font-family: 'PT Serif', 'Helvetica', sans-serif;
-    color: #333; /* 颜色与HomePage相符 */
+    color: #333;
 }
 
 .book-card-meta p {
     margin: 0;
     padding: 0;
-    font-size: 14px;
-    color: #555;
+    display: block;
+    line-height: 1.5;
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 省略显示不完的文字 */
 }
 
-.book-card-meta p span {
-    margin-right: 10px;
-}
-
-.book-card-meta p:first-child {
-    display: flex;
-    justify-content: space-between;
+.book-title {
     font-size: 16px;
-    color: #00A3D9; /* 颜色与HomePage相符 */
+    color: #333;
+    margin-bottom: 8px;
 }
 
 .book-author {
-    white-space: nowrap; /* 不换行 */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 100%; /* 确保宽度一致 */
+    font-size: 16px;
+    color: #00A3D9;
+    margin-bottom: 8px;
 }
 
-.book-sales {
-    margin-left: auto;
-    text-align: right;
+.book-price {
+    font-size: 16px;
+    color: #00A3D9;
+    margin-bottom: 8px;
+}
+
+.book-isbn {
+    font-size: 16px;
+    color: #00A3D9;
+    margin-bottom: 8px;
+}
+
+.book-sales-inventory {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #005f8d;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e0e0e0;
 }
