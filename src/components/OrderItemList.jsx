@@ -14,8 +14,13 @@ export default function OrderItemList({ orderItems }) {
                         avatar={<Avatar shape="square" size={80} src={item.book.cover} />}
                         // 商品标题
                         title={<span style={{ fontWeight: 'bold' }}>{item.book.title}</span>}
-                        // 商品数量
-                        description={<Space><span style={{ color: 'grey' }}>Quantity:</span> <span>{item.quantity}</span></Space>}
+                        // 商品描述，包括数量和单价
+                        description={
+                            <Space direction="vertical">
+                                <span style={{ color: 'grey' }}>Quantity: {item.quantity}</span>
+                                <span style={{ color: 'grey' }}>Price: ${item.book.price.toFixed(2)}</span>
+                            </Space>
+                        }
                     />
                 </List.Item>
             )}

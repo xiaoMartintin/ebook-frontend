@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, getJson, put } from "./common";
+import { DUMMY_RESPONSE, PREFIX, getJson, put, post } from "./common";
 
 export async function getMe() {
     const url = `${PREFIX}/user/me`;
@@ -22,3 +22,17 @@ export async function changePassword(request) {
     }
     return res;
 }
+
+export async function register(username, nickname, password, email) {
+    const url = `${PREFIX}/user/register`;
+    let res;
+    try {
+        res = await post(url, { username, nickname, password, email });
+    } catch(e) {
+        console.log(e);
+        res = DUMMY_RESPONSE;
+    }
+    return res;
+}
+
+

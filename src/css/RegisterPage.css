@@ -1,0 +1,24 @@
+.form-group input {
+    width: 100%;
+    padding: 12px; /* 调整padding */
+    margin-bottom: 16px; /* 调整margin */
+    box-sizing: border-box;
+    border-radius: 8px; /* 调整圆角 */
+    border: 1px solid #d9d9d9; /* 设置边框颜色 */
+    background-color: #fafafa; /* 设置背景色 */
+}
+
+.form-group input:focus {
+    border-color: #40a9ff; /* 设置聚焦时的边框颜色 */
+    box-shadow: 0 0 5px rgba(64, 169, 255, 0.5); /* 设置聚焦时的阴影 */
+}
+
+.input-password {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.prefixIcon {
+    margin-right: 8px;
+}

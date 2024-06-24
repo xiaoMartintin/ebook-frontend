@@ -95,7 +95,7 @@ export default function NavBar({ user }) {
                     </Menu.Item>
                     <Menu.Item key="balance" disabled>
                         <AccountBookOutlined />
-                        余额：{user.balance}元
+                        余额：{user.balance.toFixed(2)}元
                     </Menu.Item>
                     <Dropdown overlay={dropMenuItems} trigger={['click']}>
                         <Menu.Item key="more" className="dropdown-menu">

@@ -18,6 +18,8 @@ export default function OrderTable({ orders }) {
             // 格式化时间
             render: (time) => <Tag color="blue">{formatTime(time)}</Tag>
         },
+        // 总价列
+        { title: 'Total Price', dataIndex: 'totalPrice', key: 'totalPrice', },
     ];
 
     return (
