@@ -7,6 +7,7 @@ import OrderPage from "./OrderPage";
 import RankPage from "./RankingPage";
 import ApiPage from "./ApiPage";
 import RegisterPage from "./RegisterPage";
+import StatisticsPage from "./StatisticsPage";
 import UserPage from "./UserPage"; // 导入用户主页组件
 
 /**
@@ -26,6 +27,7 @@ export default function AppRouter() {
                 <Route path="/api-docs" element={<ApiPage />} />
                 <Route path="/profile" element={<UserPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/*" element={<HomePage />} />
             </Routes>
         </BrowserRouter>
