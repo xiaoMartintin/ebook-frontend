@@ -5,12 +5,17 @@ import { useEffect, useState } from 'react';
 import { getMe } from './service/userService';
 
 function App() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUser = async () => {
             const me = await getMe();
-            setUser(me);
+            if (me) {
+                setUser(me);
+                localStorage.setItem('user', JSON.stringify(me));
+            }
+            setLoading(false);
         };
         fetchUser();
     }, []);
@@ -20,6 +25,10 @@ function App() {
         colorInfo: "#00A3D9"
     };
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <ConfigProvider
             theme={{
@@ -27,7 +36,7 @@ function App() {
                 token: themeToken
             }}
         >
-            <UserContext.Provider value={user}>
+            <UserContext.Provider value={{ user, setUser }}>
                 <AppRouter />
             </UserContext.Provider>
         </ConfigProvider>

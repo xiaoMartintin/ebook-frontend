@@ -5,6 +5,7 @@ export async function logoutService() {
     let res;
     try {
         res = await put(url);
+        localStorage.removeItem('user'); // Clear user data from localStorage on logout
     } catch (e) {
         console.log(e);
         res = DUMMY_RESPONSE;

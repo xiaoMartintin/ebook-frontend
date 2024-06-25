@@ -1,21 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Button, Switch, message } from 'antd';
+import React, { useState, useEffect, useContext } from 'react';
+import { Table, Switch, message, Card, Button, Row, Col, Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { PrivateLayout } from '../components/privateLayout';
 import { getAllUsers, changeUserStatus } from '../service/userManagementService';
+import { UserContext } from '../lib/context';
 import '../css/userManagementPage.css';
 
 const UserManagementPage = () => {
+    const { user } = useContext(UserContext);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetchUsers();
-    }, []);
+        if (user && user.is_admin === 1) {
+            fetchUsers();
+        } else {
+            message.error('Access denied');
+        }
+    }, [user]);
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (search = "") => {
         setLoading(true);
         try {
-            const response = await getAllUsers();
-            setUsers(response.data);
+            const result = await getAllUsers(search);
+            if (result.ok !== false) {
+                setUsers(result); // 假设result直接是用户数据的数组
+            } else {
+                message.error('Failed to fetch users');
+            }
         } catch (error) {
             message.error('Failed to fetch users');
         } finally {
@@ -27,10 +40,15 @@ const UserManagementPage = () => {
         try {
             await changeUserStatus(userId, isEnabled);
             message.success('User status updated');
-            fetchUsers();
+            fetchUsers(searchTerm);
         } catch (error) {
             message.error('Failed to update user status');
         }
+    };
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+        fetchUsers(event.target.value);
     };
 
     const columns = [
@@ -38,6 +56,11 @@ const UserManagementPage = () => {
             title: 'Username',
             dataIndex: 'username',
             key: 'username',
+        },
+        {
+            title: 'Nickname',
+            dataIndex: 'nickname',
+            key: 'nickname',
         },
         {
             title: 'Email',
@@ -55,25 +78,44 @@ const UserManagementPage = () => {
             dataIndex: 'is_enabled',
             key: 'is_enabled',
             render: (isEnabled, record) => (
-                <Switch
-                    checked={isEnabled}
-                    onChange={() => handleToggleStatus(record.id, !isEnabled)}
-                />
+                record.is_admin ? (
+                    <Switch checked={isEnabled} disabled />
+                ) : (
+                    <Switch
+                        checked={isEnabled}
+                        onChange={() => handleToggleStatus(record.id, !isEnabled)}
+                    />
+                )
             ),
         },
     ];
 
     return (
-        <div className="user-management-page">
-            <h1>User Management</h1>
-            <Table
-                columns={columns}
-                dataSource={users}
-                rowKey="id"
-                loading={loading}
-                pagination={false}
-            />
-        </div>
+        <PrivateLayout>
+            <Card className="user-management-page">
+                <h1>User Management</h1>
+                <Row justify="space-between" style={{ marginBottom: '20px' }}>
+                    <Col>
+                        <Input
+                            placeholder="Search by username or email"
+                            prefix={<SearchOutlined />}
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                    </Col>
+                    <Col>
+                        <Button type="primary" onClick={() => fetchUsers(searchTerm)}>Refresh</Button>
+                    </Col>
+                </Row>
+                <Table
+                    columns={columns}
+                    dataSource={users}
+                    rowKey="id"
+                    loading={loading}
+                    pagination={{ pageSize: 10 }}
+                />
+            </Card>
+        </PrivateLayout>
     );
 };
 

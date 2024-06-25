@@ -1,12 +1,68 @@
 .user-management-page {
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
 .user-management-page h1 {
+    font-size: 32px; /* 增加字体大小 */
+    font-weight: bold;
+    color: #00A3D9;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px; /* 增加间距 */
+    text-transform: uppercase; /* 全部字母大写 */
 }
 
 .ant-table {
     margin-top: 20px;
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.ant-table-thead > tr > th {
+    background-color: #00A3D9; /* 表头背景颜色 */
+    color: #fff; /* 表头文字颜色 */
+    font-size: 16px;
+}
+
+.ant-table-tbody > tr > td {
+    font-size: 14px;
+}
+
+.ant-switch-checked {
+    background-color: #00A3D9;
+}
+
+.user-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.button-group {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.ant-btn-primary {
+    background-color: #00A3D9;
+    border-color: #00A3D9;
+}
+
+.ant-btn-primary:hover {
+    background-color: #007aab;
+    border-color: #007aab;
+}
+
+.ant-btn-default {
+    border-color: #00A3D9;
+}
+
+.ant-btn-default:hover {
+    color: #fff;
+    background-color: #00A3D9;
+    border-color: #00A3D9;
 }

@@ -14,38 +14,37 @@ import BookManagementPage from './BookManagementPage';
 import OrderManagementPage from './OrderManagementPage';
 import UserManagementPage from './UserManagementPage';
 
-
 import { useContext } from 'react';
 import { UserContext } from '../lib/context';
-import {BASEURL} from "../utils/common";
+
 export default function AppRouter() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/book/:id" element={<BookPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/order" element={<OrderPage />} />
-                <Route path="/rank" element={<RankPage />} />
-                <Route path="/api-docs" element={<ApiPage />} />
-                <Route path="/profile" element={<UserPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/statistics" element={<StatisticsPage />} />
+                <Route path="/" element={user ? <HomePage /> : <Navigate to="/login" />} />
+                <Route path="/book/:id" element={user ? <BookPage /> : <Navigate to="/login" />} />
+                <Route path="/cart" element={user ? <CartPage /> : <Navigate to="/login" />} />
+                <Route path="/order" element={user ? <OrderPage /> : <Navigate to="/login" />} />
+                <Route path="/rank" element={user ? <RankPage /> : <Navigate to="/login" />} />
+                <Route path="/statistics" element={user ? <StatisticsPage /> : <Navigate to="/login" />} />
+                <Route path="/profile" element={user ? <UserPage /> : <Navigate to="/login" />} />
                 {user && user.is_admin === 1 ? (
                     <>
                         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
                         <Route path="/admin/books" element={<BookManagementPage />} />
                         <Route path="/admin/orders" element={<OrderManagementPage />} />
                         <Route path="/admin/users" element={<UserManagementPage />} />
-                        <Route path="/admin/user-management" element={<UserManagementPage />} /> // 添加用户管理页面路由
                     </>
                 ) : (
-                    <Route path="/*" element={<Navigate to="/" />} />
+                    user && (
+                        <Route path="*" element={<Navigate to="/" />} />
+                    )
                 )}
-                <Route path="/*" element={<Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
             </Routes>
         </BrowserRouter>
     );

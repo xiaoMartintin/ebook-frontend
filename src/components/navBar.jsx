@@ -17,7 +17,7 @@ import {
 import { logoutService } from "../service/logoutService";
 import useMessage from "antd/es/message/useMessage";
 import { handleBaseApiResponse } from "../utils/message";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ChangePasswordModal from "./changePasswordModal";
 import { UserContext } from "../lib/context";
 import '../css/navBar.css';
@@ -30,7 +30,7 @@ export default function NavBar() {
     const location = useLocation();
     const parts = location.pathname.split('/');
     const selectedKey = '/' + parts[parts.length - 1];
-    const user = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const navItems = [
         { label: "HOME", value: "/", icon: <HomeOutlined /> },
@@ -42,10 +42,10 @@ export default function NavBar() {
 
     const adminNavItems = [
         { label: "HOME", value: "/", icon: <HomeOutlined /> },
-        { label: "DASHBOARD", value: "/admin/dashboard", icon: <DashboardOutlined /> },
         { label: "BOOKS", value: "/admin/books", icon: <BookOutlined /> },
         { label: "ORDERS", value: "/admin/orders", icon: <OrderedListOutlined /> },
-        { label: "USERS", value: "/admin/users", icon: <UsergroupAddOutlined /> }
+        { label: "USERS", value: "/admin/users", icon: <UsergroupAddOutlined /> },
+        { label: "DASHBOARD", value: "/admin/dashboard", icon: <DashboardOutlined /> }
     ];
 
     const navMenuItems = navItems.map(item => ({
@@ -71,9 +71,13 @@ export default function NavBar() {
     }
 
     const handleMenuClick = async (e) => {
-        if (e.key === "/logoutService") {
+        if (e.key === "/logout") {
             let res = await logoutService();
-            handleBaseApiResponse(res, messageApi, () => navigate("/login"));
+            handleBaseApiResponse(res, messageApi, () => {
+                setUser(null);
+                localStorage.removeItem('user'); // Clear user data from localStorage on logout
+                navigate("/login");
+            });
             return;
         }
         if (e.key === "password") {
@@ -87,11 +91,15 @@ export default function NavBar() {
 
     const dropMenuItems = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="/logoutService" icon={<LogoutOutlined />} danger>
+            <Menu.Item key="/logout" icon={<LogoutOutlined />} danger>
                 LOG OUT
             </Menu.Item>
         </Menu>
     );
+
+    useEffect(() => {
+        // This effect will re-run when the user state changes, ensuring the NavBar re-renders correctly.
+    }, [user]);
 
     return (
         <Sider className="navbar-sider" width={200} theme="light">
@@ -131,7 +139,7 @@ export default function NavBar() {
                     </Menu.Item>
                     <Menu.Item key="balance" disabled>
                         <AccountBookOutlined />
-                        余额：{user.balance.toFixed(2)}元
+                        {`余额：${user.balance ? user.balance.toFixed(2) : 'N/A'}元`}
                     </Menu.Item>
                     <Dropdown overlay={dropMenuItems} trigger={['click']}>
                         <Menu.Item key="more" className="dropdown-menu">

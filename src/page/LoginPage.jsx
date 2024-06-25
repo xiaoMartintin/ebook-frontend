@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
@@ -6,15 +6,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { BasicLayout } from "../components/basicLayout";
 import { loginService } from "../service/loginService";
 import { handleBaseApiResponse } from "../utils/message";
+import { UserContext } from "../lib/context";
 
 const LoginPage = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     const onSubmit = async (values) => {
         const { username, password } = values;
         const res = await loginService(username, password);
-        handleBaseApiResponse(res, messageApi, () => navigate("/"));
+        handleBaseApiResponse(res, messageApi, () => {
+            setUser(res.data);  // assuming res.data contains the user information
+            localStorage.setItem('user', JSON.stringify(res.data));  // persist user info
+            navigate("/");
+        });
     };
 
     return (

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../lib/context';
 import { Card, Form, Input, Button, Avatar, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { PrivateLayout } from '../components/privateLayout';
@@ -6,7 +7,7 @@ import { getMe } from '../service/userService';
 import '../css/userPage.css';
 
 export default function UserPage() {
-    const [user, setUser] = useState(null);
+    const { user, setUser } = useContext(UserContext);
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -16,10 +17,11 @@ export default function UserPage() {
             form.setFieldsValue(me);
         };
         fetchUser();
-    }, [form]);
+    }, [form, setUser]);
 
     const handleFinish = (values) => {
         console.log('Updated values: ', values);
+        // You can add code here to update the user information in your backend
     };
 
     return (

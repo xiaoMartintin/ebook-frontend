@@ -1,13 +1,13 @@
 import { PREFIX, get, put } from "../utils/common";
 
 // 获取所有用户
-export async function getAllUsers() {
-    const url = `${PREFIX}/users`;
+export async function getAllUsers(search = "") {
+    const url = `${PREFIX}/users?search=${encodeURIComponent(search)}`;
     let result;
 
     try {
-        result = await get(url);
-        result = await result.json();  // 解析JSON数据
+        const response = await get(url);
+        result = await response.json();  // 解析JSON数据
     } catch (e) {
         console.log(e);
         result = {
@@ -26,6 +26,7 @@ export async function changeUserStatus(userId, isEnabled) {
 
     try {
         result = await put(url, { is_enabled: isEnabled });
+        console.log(result);
     } catch (e) {
         console.log(e);
         result = {

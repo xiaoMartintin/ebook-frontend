@@ -2,28 +2,48 @@ import { Layout, Space, Row, Col, Avatar } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import NavBar from "./navBar";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getMe } from "../service/userService";
 import { UserContext } from "../lib/context";
 
 export function PrivateLayout({ children }) {
-    const [user, setUser] = useState(null); // 用户状态
-    const navigate = useNavigate(); // 导航功能用于重定向
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkLogin = async () => {
             const me = await getMe();
             if (!me) {
+                setUser(null);
                 navigate("/login");
             } else {
                 setUser(me);
             }
         };
         checkLogin();
-    }, [navigate]);
+    }, [navigate, setUser]);
+
+    const renderHeader = () => {
+        if (user?.is_admin === 1) {
+            return (
+                <h1 style={{ margin: 0, marginLeft: 10, color: '#00A3D9', fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}>
+                    Martin's eBookStore - Admin
+                </h1>
+            );
+        }
+        return (
+            <h1 style={{ margin: 0, marginLeft: 10, color: '#00A3D9', fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}>
+                Martin's eBookStore
+            </h1>
+        );
+    };
+
+    if (!user) {
+        return null;
+    }
 
     return (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={{ user, setUser }}>
             <Layout className="basic-layout">
                 <Header className="header">
                     <Row align="middle">
@@ -31,9 +51,7 @@ export function PrivateLayout({ children }) {
                             <Avatar src={process.env.PUBLIC_URL + '/logo512.png'} size="large" />
                         </Col>
                         <Col>
-                            <h1 style={{ margin: 0, marginLeft: 10, color: '#00A3D9', fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}>
-                                Martin's eBookStore
-                            </h1>
+                            {renderHeader()}
                         </Col>
                     </Row>
                 </Header>

@@ -5,7 +5,7 @@ export async function getStatistics(filters = {}) {
     const url = `${PREFIX}/statistics?startDate=${startDate || ''}&endDate=${endDate || ''}`;
     let response;
     try {
-        response = await getJson(url);
+        response = await getJson(url)
     } catch (e) {
         console.log(e);
         response = DUMMY_RESPONSE;
