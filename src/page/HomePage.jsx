@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { Card, Space, Input, Carousel, Row, Col, Image } from "antd";
+import { Card, Space, Input, Button, Carousel, Row, Col, Image } from "antd";
 import { PrivateLayout } from "../components/privateLayout";
 import BookList from "../components/bookList";
 import { searchBooks } from "../service/bookService";
-import BookCard from "../components/bookCard";
+import { SearchOutlined } from '@ant-design/icons';
 import "../css/homePage.css";
 
 const { Search } = Input;
@@ -46,13 +46,15 @@ export default function HomePage() {
         <PrivateLayout>
             <Card className="card-container" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
                 <Space direction="vertical" size="large" style={{ width: "100%" }}>
-                    <Search
+                    <Input.Search
                         placeholder="Enter Keyword"
                         onSearch={handleSearch}
-                        enterButton
-                        size="large"
-                        className="search-input"
-                        style={{ fontFamily: "'PT Serif', 'Helvetica', sans-serif" }}
+                        enterButton={
+                            <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch} className="search-button">
+                                Search
+                            </Button>
+                        }
+                        style={{ marginBottom: '20px' }}
                     />
                     {books.length > 0 && (
                         <Carousel
@@ -65,7 +67,7 @@ export default function HomePage() {
                                 <div key={book.id} className="carousel-item">
                                     <Row gutter={16} style={{ height: "100%" }}>
                                         <Col span={8}>
-                                            <Image src={book.cover} />
+                                            <Image src={book.cover} className="book-cover-image"/>
                                         </Col>
                                         <Col span={16} style={{ display: "flex", alignItems: "stretch" }}>
                                             <Link to={`/book/${book.id}`} style={{ display: "flex", alignItems: "stretch", flex: 1 }}>

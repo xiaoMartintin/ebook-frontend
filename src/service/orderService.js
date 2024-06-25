@@ -30,3 +30,25 @@ export async function getOrders(filters = {}) {
         return [];
     }
 }
+
+
+export async function getAllOrders(filters = {}) {
+    const { keyword, startDate, endDate } = filters;
+    const url = `${PREFIX}/admin/orders?keyword=${keyword || ''}&startDate=${startDate || ''}&endDate=${endDate || ''}`;
+    let response;
+    try {
+        response = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        response = DUMMY_RESPONSE;
+    }
+
+    if (response.ok && Array.isArray(response.data)) {
+        return response.data;
+    } else {
+        return [];
+    }
+}
+
+
+

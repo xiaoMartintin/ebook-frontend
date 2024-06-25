@@ -1,10 +1,10 @@
-/* homePage.css */
-
 .card-container {
     margin: 20px;
     padding: 20px;
     background-color: #f9f9f9;
     font-family: 'PT Serif', 'Helvetica', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .search-input .ant-input {
@@ -25,7 +25,11 @@
 }
 
 .book-carousel {
-    margin-top: 20px;
+    margin-top: -20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e6e6e6; /* 添加淡淡的边框 */
 }
 
 .carousel-item {
@@ -33,6 +37,12 @@
     align-items: stretch;
     padding: 20px;
     height: 100%; /* 确保高度一致 */
+    transition: transform 0.5s ease; /* 添加动画效果 */
+}
+
+.carousel-item:hover {
+    transform: scale(1.02); /* 鼠标悬停时放大效果 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 鼠标悬停时的阴影效果 */
 }
 
 .book-cover {
@@ -40,6 +50,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.book-cover-image {
+    border-radius: 10px; /* 给封面图片添加圆角 */
+    transition: transform 0.5s ease; /* 添加动画效果 */
+}
+
+.book-cover-image:hover {
+    transform: scale(1.05); /* 鼠标悬停时放大效果 */
 }
 
 .book-info {
@@ -50,9 +69,14 @@
     text-align: left;
     font-family: 'PT Serif', 'Helvetica', sans-serif;
     background-color: #e6f7ff; /* 浅蓝色背景 */
-    padding: 10px;
-    border-radius: 20px;
+    padding: 20px;
+    border-radius: 10px;
     height: 100%; /* 确保高度一致 */
+    transition: background-color 0.5s ease; /* 添加动画效果 */
+}
+
+.book-info:hover {
+    background-color: #d4e6f1; /* 鼠标悬停时的背景颜色变化 */
 }
 
 .book-info h2 {

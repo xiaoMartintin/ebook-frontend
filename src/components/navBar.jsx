@@ -29,8 +29,9 @@ export default function NavBar() {
     const navigate = useNavigate();
     const location = useLocation();
     const parts = location.pathname.split('/');
-    const selectedKey = '/' + parts[parts.length - 1];
     const { user, setUser } = useContext(UserContext);
+    const selectedKey = '/' + (user && user.is_admin === 1 && parts.includes('admin') ? parts[parts.length - 2] + '/' + parts[parts.length - 1] : parts[parts.length - 1]);
+    //停在哪个页面，button就保持深色
 
     const navItems = [
         { label: "HOME", value: "/", icon: <HomeOutlined /> },
@@ -43,10 +44,11 @@ export default function NavBar() {
     const adminNavItems = [
         { label: "HOME", value: "/", icon: <HomeOutlined /> },
         { label: "BOOKS", value: "/admin/books", icon: <BookOutlined /> },
-        { label: "ORDERS", value: "/admin/orders", icon: <OrderedListOutlined /> },
         { label: "USERS", value: "/admin/users", icon: <UsergroupAddOutlined /> },
+        { label: "ORDERS", value: "/admin/orders", icon: <OrderedListOutlined /> },
         { label: "DASHBOARD", value: "/admin/dashboard", icon: <DashboardOutlined /> }
     ];
+
 
     const navMenuItems = navItems.map(item => ({
         key: item.value,

@@ -42,7 +42,11 @@ export default function CartPage() {
                     placeholder="Enter Keyword"
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    enterButton={<Button type="primary" icon={<SearchOutlined />} />}
+                    enterButton={
+                        <Button type="primary" icon={<SearchOutlined />} onClick={handleSearchChange} className="search-button">
+                            Search
+                        </Button>
+                    }
                     style={{ marginBottom: '20px' }}
                 />
                 <CartItemTable cartItems={filteredItems} onMutate={initCartItems} />

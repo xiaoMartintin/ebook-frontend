@@ -9,16 +9,22 @@
 }
 
 .cart-title {
-    font-size: 24px;
+    font-size: 32px; /* 增加字体大小 */
     font-weight: bold;
     color: #00A3D9;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px; /* 增加间距 */
 }
 
-.search-input {
-    font-family: 'PT Serif', 'Helvetica', sans-serif;
+.ant-input-search {
     width: 100%;
-    border-radius: 8px;
-    border: 1px solid #00A3D9;
+}
+
+.search-button {
+    font-family: "PT Serif";
+    width: 100%; /* 使按钮占满水平空间 */
+    text-align: center; /* 使按钮内的文本和图标居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

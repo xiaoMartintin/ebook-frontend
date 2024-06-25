@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Table, Switch, message, Card, Button, Row, Col, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { PrivateLayout } from '../components/privateLayout';
-import { getAllUsers, changeUserStatus } from '../service/userManagementService';
+import { getAllUsers, changeUserStatus } from '../service/userService';
 import { UserContext } from '../lib/context';
 import '../css/userManagementPage.css';
 
@@ -93,19 +93,20 @@ const UserManagementPage = () => {
     return (
         <PrivateLayout>
             <Card className="user-management-page">
-                <h1>User Management</h1>
+                <h1 className="user-management-title">User Management</h1>
                 <Row justify="space-between" style={{ marginBottom: '20px' }}>
-                    <Col>
-                        <Input
-                            placeholder="Search by username or email"
-                            prefix={<SearchOutlined />}
-                            value={searchTerm}
-                            onChange={handleSearch}
-                        />
-                    </Col>
-                    <Col>
-                        <Button type="primary" onClick={() => fetchUsers(searchTerm)}>Refresh</Button>
-                    </Col>
+                    <Input.Search
+                        placeholder="Search by username or email"
+                        prefix={<SearchOutlined />}
+                        value={searchTerm}
+                        onChange={handleSearch}
+                        enterButton={
+                            <Button type="primary" icon={<SearchOutlined />} onClick={() => fetchUsers(searchTerm)} className="search-button">
+                                Search
+                            </Button>
+                        }
+                        style={{ width: '100%' }}
+                    />
                 </Row>
                 <Table
                     columns={columns}
