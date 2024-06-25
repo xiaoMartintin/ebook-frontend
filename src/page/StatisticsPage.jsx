@@ -73,3 +73,7 @@ export default function StatisticsPage() {
         </PrivateLayout>
     );
 }
+
+//取消日期选择时，dateRange 变为 null
+//在 handleDateChange 中添加对 null 值的处理。
+// 将 dateRange 的默认值设置为 [null, null]。
