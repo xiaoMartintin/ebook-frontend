@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, getJson, post } from "./common";
+import { DUMMY_RESPONSE, PREFIX, getJson} from "./common";
 
 export async function getStatistics(filters = {}) {
     const { startDate, endDate } = filters;

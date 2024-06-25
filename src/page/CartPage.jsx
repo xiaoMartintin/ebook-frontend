@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCartItems } from "../service/cart";
 import { Card, Input, Button } from "antd";
 import CartItemTable from "../components/CartTable";
-import { PrivateLayout } from "../components/layout";
+import { PrivateLayout } from "../components/PrivateLayout";
 import { SearchOutlined } from '@ant-design/icons';
 import "../css/CartPage.css";
 

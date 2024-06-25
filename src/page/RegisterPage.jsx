@@ -3,7 +3,7 @@ import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
-import { BasicLayout } from "../components/layout";
+import { BasicLayout } from "../components/BasicLayout";
 import { register } from "../service/user";
 import { handleBaseApiResponse } from "../utils/message";
 import "../css/RegisterPage.css"; // 引入样式文件

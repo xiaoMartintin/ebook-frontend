@@ -5,6 +5,7 @@ export async function getMe() {
     let me = null;
     try {
         me = await getJson(url);
+        console.log(me);
     } catch(e) {
         console.log(e);
     }

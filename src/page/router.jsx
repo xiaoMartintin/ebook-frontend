@@ -1,20 +1,24 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./HomePage";
-import LoginPage from "./LoginPage";
-import BookPage from "./BookPage";
-import CartPage from "./CartPage";
-import OrderPage from "./OrderPage";
-import RankPage from "./RankingPage";
-import ApiPage from "./ApiPage";
-import RegisterPage from "./RegisterPage";
-import StatisticsPage from "./StatisticsPage";
-import UserPage from "./UserPage"; // 导入用户主页组件
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import HomePage from './HomePage';
+import LoginPage from './LoginPage';
+import BookPage from './BookPage';
+import CartPage from './CartPage';
+import OrderPage from './OrderPage';
+import RankPage from './RankingPage';
+import ApiPage from './ApiPage';
+import RegisterPage from './RegisterPage';
+import StatisticsPage from './StatisticsPage';
+import UserPage from './UserPage';
+import AdminDashboardPage from './AdminDashboardPage';
+import BookManagementPage from './BookManagementPage';
+import OrderManagementPage from './OrderManagementPage';
+import UserManagementPage from './UserManagementPage';
+import { useContext } from 'react';
+import { UserContext } from '../lib/context';
 
-/**
- * AppRouter 组件用于配置应用程序的路由
- * 使用 react-router-dom 提供的 BrowserRouter、Route 和 Routes 组件进行路由配置
- */
 export default function AppRouter() {
+    const user = useContext(UserContext);
+
     return (
         <BrowserRouter>
             <Routes>
@@ -28,7 +32,17 @@ export default function AppRouter() {
                 <Route path="/profile" element={<UserPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/statistics" element={<StatisticsPage />} />
-                <Route path="/*" element={<HomePage />} />
+                {user && user.is_admin === 1 ? (
+                    <>
+                        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+                        <Route path="/admin/books" element={<BookManagementPage />} />
+                        <Route path="/admin/orders" element={<OrderManagementPage />} />
+                        <Route path="/admin/users" element={<UserManagementPage />} />
+                    </>
+                ) : (
+                    <Route path="/*" element={<Navigate to="/" />} />
+                )}
+                <Route path="/*" element={<Navigate to="/login" />} />
             </Routes>
         </BrowserRouter>
     );

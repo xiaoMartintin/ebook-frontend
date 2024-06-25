@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Input, Button, DatePicker } from "antd";
-import { PrivateLayout } from "../components/layout";
+import { PrivateLayout } from "../components/PrivateLayout";
 import OrderTable from "../components/OrderTable";
 import { getOrders } from "../service/order";
 import { SearchOutlined } from '@ant-design/icons';

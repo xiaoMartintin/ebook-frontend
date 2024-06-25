@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, DatePicker, Button, Table } from "antd";
-import { PrivateLayout } from "../components/layout";
+import { PrivateLayout } from "../components/PrivateLayout";
 import { getStatistics } from "../service/statistics";
 import { SearchOutlined } from '@ant-design/icons';
 import "../css/StatisticsPage.css";

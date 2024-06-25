@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Card, Form, Input, Button, Avatar, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { PrivateLayout } from '../components/layout';
+import { PrivateLayout } from '../components/PrivateLayout';
 import { getMe } from '../service/user';
 import '../css/UserPage.css';
 

@@ -1,6 +1,6 @@
 import { Card } from "antd";       // 导入Ant Design的Card组件
 import ApiDocs from "../components/api_docs";  // 导入ApiDocs组件，用于显示API文档
-import { BasicLayout } from "../components/layout";  // 导入BasicLayout布局组件，用于页面布局
+import { BasicLayout } from "../components/BasicLayout";  // 导入BasicLayout布局组件，用于页面布局
 
 /**
  * ApiPage 组件，用于展示API文档。

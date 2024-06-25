@@ -1,5 +1,5 @@
 import { Card } from "antd";
-import { PrivateLayout } from "../components/layout";
+import { PrivateLayout } from "../components/PrivateLayout";
 import BookRankChart from "../components/RankingChart";
 import { useEffect, useState } from "react";
 import { getTop10BestSellingBooks } from "../service/book";

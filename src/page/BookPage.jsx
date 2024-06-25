@@ -3,7 +3,7 @@ import { Button, Input } from "antd";
 import BookProfile from "../components/BookProfile";
 import { useEffect, useState } from "react";
 import { getBookById, getBookComments } from "../service/book";
-import { PrivateLayout } from "../components/layout";
+import { PrivateLayout } from "../components/PrivateLayout";
 import { ArrowLeftOutlined, SearchOutlined } from '@ant-design/icons';
 
 /**

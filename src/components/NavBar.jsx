@@ -1,37 +1,61 @@
-import { Menu, Layout, Avatar, Dropdown, Row, Col } from "antd";
+import { Menu, Layout, Avatar, Dropdown } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     LogoutOutlined,
     UserOutlined,
     AccountBookOutlined,
-    FormOutlined
+    FormOutlined,
+    HomeOutlined,
+    ShoppingCartOutlined,
+    OrderedListOutlined,
+    BarChartOutlined,
+    PieChartOutlined,
+    DashboardOutlined,
+    BookOutlined,
+    UsergroupAddOutlined
 } from '@ant-design/icons';
 import { logout } from "../service/logout";
 import useMessage from "antd/es/message/useMessage";
 import { handleBaseApiResponse } from "../utils/message";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ChangePasswordModal from "./ChangePasswordModal";
+import { UserContext } from "../lib/context";
 import '../css/NavBar.css';
 
 const { Sider } = Layout;
 
-export default function NavBar({ user }) {
+export default function NavBar() {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const parts = location.pathname.split('/');
     const selectedKey = '/' + parts[parts.length - 1];
+    const user = useContext(UserContext);
 
     const navItems = [
-        { label: "HOME", value: "/" },
-        { label: "CART", value: "/cart" },
-        { label: "ORDER", value: "/order" },
-        { label: "RANKING", value: "/rank" },
-        { label: "STATISTICS", value: "/statistics" }
+        { label: "HOME", value: "/", icon: <HomeOutlined /> },
+        { label: "CART", value: "/cart", icon: <ShoppingCartOutlined /> },
+        { label: "ORDER", value: "/order", icon: <OrderedListOutlined /> },
+        { label: "RANKING", value: "/rank", icon: <BarChartOutlined /> },
+        { label: "STATISTICS", value: "/statistics", icon: <PieChartOutlined /> }
+    ];
+
+    const adminNavItems = [
+        { label: "DASHBOARD", value: "/admin/dashboard", icon: <DashboardOutlined /> },
+        { label: "BOOKS", value: "/admin/books", icon: <BookOutlined /> },
+        { label: "ORDERS", value: "/admin/orders", icon: <OrderedListOutlined /> },
+        { label: "USERS", value: "/admin/users", icon: <UsergroupAddOutlined /> }
     ];
 
     const navMenuItems = navItems.map(item => ({
         key: item.value,
+        icon: item.icon,
+        label: <Link to={item.value}>{item.label}</Link>
+    }));
+
+    const adminMenuItems = adminNavItems.map(item => ({
+        key: item.value,
+        icon: item.icon,
         label: <Link to={item.value}>{item.label}</Link>
     }));
 
@@ -78,8 +102,18 @@ export default function NavBar({ user }) {
                 className="navbar-menu"
                 onClick={handleMenuClick}
             >
-                {navMenuItems.map(item => (
-                    <Menu.Item key={item.key} className="nav-button">
+                {!user && navMenuItems.map(item => (
+                    <Menu.Item key={item.key} icon={item.icon} className="nav-button">
+                        {item.label}
+                    </Menu.Item>
+                ))}
+                {user && user.is_admin === 1 && adminMenuItems.map(item => (
+                    <Menu.Item key={item.key} icon={item.icon} className="nav-button">
+                        {item.label}
+                    </Menu.Item>
+                ))}
+                {user && user.is_admin !== 1 && navMenuItems.map(item => (
+                    <Menu.Item key={item.key} icon={item.icon} className="nav-button">
                         {item.label}
                     </Menu.Item>
                 ))}
