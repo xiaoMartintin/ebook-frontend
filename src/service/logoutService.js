@@ -1,6 +1,6 @@
-import { DUMMY_RESPONSE, PREFIX, put } from "./common";
+import { DUMMY_RESPONSE, PREFIX, put } from "../utils/common";
 
-export async function logout() {
+export async function logoutService() {
     const url = `${PREFIX}/logout`;
     let res;
     try {

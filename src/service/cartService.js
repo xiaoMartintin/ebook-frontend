@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, del, getJson, put } from "./common";
+import { DUMMY_RESPONSE, PREFIX, del, getJson, put } from "../utils/common";
 
 export async function getCartItems() {
     const url = `${PREFIX}/cart`;

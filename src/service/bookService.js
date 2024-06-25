@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, getJson, post } from "./common";
+import { DUMMY_RESPONSE, PREFIX, getJson, post } from "../utils/common";
 
 export async function searchBooks(keyword, pageIndex, pageSize) {
     const url = `${PREFIX}/books?keyword=${keyword}&pageIndex=${pageIndex}&pageSize=${pageSize}`;

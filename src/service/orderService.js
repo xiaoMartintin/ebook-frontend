@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, getJson, post } from "./common";
+import { DUMMY_RESPONSE, PREFIX, post, getJson} from "../utils/common";
 
 export async function placeOrder(orderInfo) {
     const url = `${PREFIX}/order`;

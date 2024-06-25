@@ -1,6 +1,6 @@
-import { PREFIX, post } from "./common";
+import { PREFIX, post} from "../utils/common";
 
-export async function login(username, password) {
+export async function loginService(username, password) {
     const url = `${PREFIX}/login`;
     let result;
 

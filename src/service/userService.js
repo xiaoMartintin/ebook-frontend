@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, getJson, put, post } from "./common";
+import { DUMMY_RESPONSE, PREFIX, getJson, put, post } from "../utils/common";
 
 export async function getMe() {
     const url = `${PREFIX}/user/me`;
