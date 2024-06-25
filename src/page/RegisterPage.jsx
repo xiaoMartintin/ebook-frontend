@@ -3,10 +3,10 @@ import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
-import { BasicLayout } from "../components/BasicLayout";
-import { register } from "../service/user";
+import { BasicLayout } from "../components/basicLayout";
+import { register } from "../service/userService";
 import { handleBaseApiResponse } from "../utils/message";
-import "../css/RegisterPage.css"; // 引入样式文件
+import "../css/registerPage.css"; // 引入样式文件
 
 const RegisterPage = () => {
     const [messageApi, contextHolder] = message.useMessage();
@@ -119,7 +119,7 @@ const RegisterPage = () => {
                         ]}
                     />
                     <div style={{ marginBlockEnd: 24, width: '100%', textAlign: 'center' }}>
-                        <Link to='/login' style={{ marginRight: '10px' }}>Already have an account? Login</Link>
+                        <Link to='/loginService' style={{ marginRight: '10px' }}>Already have an account? Login</Link>
                     </div>
                 </LoginForm>
             </div>

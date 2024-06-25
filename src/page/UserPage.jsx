@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Card, Form, Input, Button, Avatar, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { PrivateLayout } from '../components/PrivateLayout';
-import { getMe } from '../service/user';
-import '../css/UserPage.css';
+import { PrivateLayout } from '../components/privateLayout';
+import { getMe } from '../service/userService';
+import '../css/userPage.css';
 
 export default function UserPage() {
     const [user, setUser] = useState(null);

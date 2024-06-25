@@ -14,13 +14,13 @@ import {
     BookOutlined,
     UsergroupAddOutlined
 } from '@ant-design/icons';
-import { logout } from "../service/logout";
+import { logoutService } from "../service/logoutService";
 import useMessage from "antd/es/message/useMessage";
 import { handleBaseApiResponse } from "../utils/message";
 import { useState, useContext } from "react";
-import ChangePasswordModal from "./ChangePasswordModal";
+import ChangePasswordModal from "./changePasswordModal";
 import { UserContext } from "../lib/context";
-import '../css/NavBar.css';
+import '../css/navBar.css';
 
 const { Sider } = Layout;
 
@@ -71,8 +71,8 @@ export default function NavBar() {
     }
 
     const handleMenuClick = async (e) => {
-        if (e.key === "/logout") {
-            let res = await logout();
+        if (e.key === "/logoutService") {
+            let res = await logoutService();
             handleBaseApiResponse(res, messageApi, () => navigate("/login"));
             return;
         }
@@ -87,7 +87,7 @@ export default function NavBar() {
 
     const dropMenuItems = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="/logout" icon={<LogoutOutlined />} danger>
+            <Menu.Item key="/logoutService" icon={<LogoutOutlined />} danger>
                 LOG OUT
             </Menu.Item>
         </Menu>

@@ -1,8 +1,8 @@
 import { Card } from "antd";
-import { PrivateLayout } from "../components/PrivateLayout";
-import BookRankChart from "../components/RankingChart";
+import { PrivateLayout } from "../components/privateLayout";
+import BookRankChart from "../components/rankingChart";
 import { useEffect, useState } from "react";
-import { getTop10BestSellingBooks } from "../service/book";
+import { getTop10BestSellingBooks } from "../service/bookService";
 
 /**
  * RankPage 组件展示图书销售排行榜。

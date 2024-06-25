@@ -2,7 +2,7 @@
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 // 导入API文档的URL，此URL在common.js中定义
-import { API_DOCS_URL } from "../service/common";
+import { API_DOCS_URL } from "../utils/common";
 
 /**
  * ApiDocs组件用于展示Swagger API文档。

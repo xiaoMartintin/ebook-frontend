@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Col, Image, Row, Space, Typography, Divider, message } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import "../css/BookProfile.css";
+import "../css/bookProfile.css";
 import { Card, Pagination, Tabs } from "antd";
-import { addCartItem } from "../service/cart";
+import { addCartItem } from "../service/cartService";
 import { handleBaseApiResponse } from "../utils/message";
 import useMessage from "antd/es/message/useMessage";
-import BookCommentList from "./BookCommentList";
-import CommentInput from "./WriteComment";
-import { addBookComment } from "../service/book";
+import BookCommentList from "./bookCommentList";
+import CommentInput from "./writeComment";
+import { addBookComment } from "../service/bookService";
 
 const { Title, Paragraph } = Typography;
 

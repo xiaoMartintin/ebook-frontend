@@ -1,9 +1,9 @@
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Button, Input } from "antd";
-import BookProfile from "../components/BookProfile";
+import BookProfile from "../components/bookProfile";
 import { useEffect, useState } from "react";
-import { getBookById, getBookComments } from "../service/book";
-import { PrivateLayout } from "../components/PrivateLayout";
+import { getBookById, getBookComments } from "../service/bookService";
+import { PrivateLayout } from "../components/privateLayout";
 import { ArrowLeftOutlined, SearchOutlined } from '@ant-design/icons';
 
 /**

@@ -1,16 +1,15 @@
-// Import necessary components and hooks
 import { Button, Form, Input, Modal, Row, Col } from "antd";
 import React from "react";
 import useMessage from "antd/es/message/useMessage";
-// Import placeOrder service method and handleBaseApiResponse utility
-import { placeOrder } from "../service/order";
+import { placeOrder } from "../service/orderService";
 import { handleBaseApiResponse } from "../utils/message";
-// Import logo image
+
+
 const logo = process.env.PUBLIC_URL + '/logo512.png';
 
 const { TextArea } = Input;
 
-// Define the PlaceOrderModal component
+
 export default function PlaceOrderModal({
                                             selectedItems, // 选中的商品项列表
                                             onOk, // 确认下单后的回调函数

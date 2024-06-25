@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrivateLayout } from '../components/PrivateLayout';
+import { PrivateLayout } from '../components/privateLayout';
 
 export default function AdminDashboardPage() {
     return (

@@ -1,5 +1,5 @@
 import { Table, Tag, Space } from "antd";
-import OrderItemList from "./OrderItemList";
+import OrderItemList from "./orderItemList";
 import { formatTime } from "../utils/time";
 
 // 订单表格组件

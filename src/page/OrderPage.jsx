@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Card, Input, Button, DatePicker } from "antd";
-import { PrivateLayout } from "../components/PrivateLayout";
-import OrderTable from "../components/OrderTable";
-import { getOrders } from "../service/order";
+import { PrivateLayout } from "../components/privateLayout";
+import OrderTable from "../components/orderTable";
+import { getOrders } from "../service/orderService";
 import { SearchOutlined } from '@ant-design/icons';
-import "../css/OrderPage.css"; // 导入自定义样式
+import "../css/orderPage.css"; // 导入自定义样式
 
 const { RangePicker } = DatePicker;
 

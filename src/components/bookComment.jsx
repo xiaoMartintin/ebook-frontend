@@ -1,10 +1,10 @@
 import { List, Space, Typography, Avatar, Button } from "antd";
 import { formatTime } from "../utils/time";
-import CommentInput from "./WriteComment";
-import { likeComment, replyComment, unlikeComment } from "../service/comment";
+import CommentInput from "./writeComment";
+import { likeComment, replyComment, unlikeComment } from "../service/commentService";
 import { handleBaseApiResponse } from "../utils/message";
 import useMessage from "antd/es/message/useMessage";
-import LikeButton from "./LikeButton";
+import LikeButton from "./likeButton";
 
 const { Text } = Typography;
 

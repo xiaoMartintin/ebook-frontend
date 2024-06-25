@@ -3,8 +3,8 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
-import { BasicLayout } from "../components/BasicLayout";
-import { login } from "../service/login";
+import { BasicLayout } from "../components/basicLayout";
+import { loginService } from "../service/loginService";
 import { handleBaseApiResponse } from "../utils/message";
 
 const LoginPage = () => {
@@ -13,7 +13,7 @@ const LoginPage = () => {
 
     const onSubmit = async (values) => {
         const { username, password } = values;
-        const res = await login(username, password);
+        const res = await loginService(username, password);
         handleBaseApiResponse(res, messageApi, () => navigate("/"));
     };
 

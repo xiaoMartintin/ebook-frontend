@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getCartItems } from "../service/cart";
+import { getCartItems } from "../service/cartService";
 import { Card, Input, Button } from "antd";
-import CartItemTable from "../components/CartTable";
-import { PrivateLayout } from "../components/PrivateLayout";
+import CartItemTable from "../components/cartTable";
+import { PrivateLayout } from "../components/privateLayout";
 import { SearchOutlined } from '@ant-design/icons';
-import "../css/CartPage.css";
+import "../css/cartPage.css";
 
 /**
  * CartPage 组件，用于展示用户的购物车页面。

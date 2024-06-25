@@ -1,5 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, post, put } from "./common";
-
+import { DUMMY_RESPONSE, PREFIX, post, put } from "../utils/common";
 export async function replyComment(commentId, content) {
     const url = `${PREFIX}/comment/${commentId}`;
     let res;

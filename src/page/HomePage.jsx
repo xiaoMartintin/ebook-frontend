@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { Card, Space, Input, Carousel, Row, Col, Image } from "antd";
-import { PrivateLayout } from "../components/PrivateLayout";
-import BookList from "../components/BookList";
-import { searchBooks } from "../service/book";
-import BookCard from "../components/BookCard";
-import "../css/HomePage.css";
+import { PrivateLayout } from "../components/privateLayout";
+import BookList from "../components/bookList";
+import { searchBooks } from "../service/bookService";
+import BookCard from "../components/bookCard";
+import "../css/homePage.css";
 
 const { Search } = Input;
 

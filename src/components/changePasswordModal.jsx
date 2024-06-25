@@ -3,7 +3,7 @@ import { Button, Form, Input, Modal, Row, Col } from "antd";
 import React from "react";
 import useMessage from "antd/es/message/useMessage"; // 使用消息提示 hook
 import { handleBaseApiResponse } from "../utils/message"; // 导入处理基本 API 响应的方法
-import { changePassword } from "../service/user"; // 导入修改密码的服务方法
+import { changePassword } from "../service/userService"; // 导入修改密码的服务方法
 
 const { Password } = Input;
 

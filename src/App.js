@@ -2,7 +2,7 @@ import { ConfigProvider, theme } from 'antd';
 import AppRouter from './page/router';
 import { UserContext } from './lib/context';
 import { useEffect, useState } from 'react';
-import { getMe } from './service/user';
+import { getMe } from './service/userService';
 
 function App() {
     const [user, setUser] = useState(null);

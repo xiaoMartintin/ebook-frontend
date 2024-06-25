@@ -1,10 +1,10 @@
 import { List, Space, Table, Image, Button, InputNumber, Row, Col } from "antd";
-import { changeCartItemQuantity, deleteCartItem } from "../service/cart";
+import { changeCartItemQuantity, deleteCartItem } from "../service/cartService";
 import useMessage from "antd/es/message/useMessage";
 import { handleBaseApiResponse } from "../utils/message";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PlaceOrderModal from "./OrderModal";
+import PlaceOrderModal from "./orderModal";
 
 /**
  * 创建购物车商品表格组件，接收 cartItems 和 onMutate 两个 props

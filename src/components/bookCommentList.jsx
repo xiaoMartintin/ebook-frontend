@@ -1,5 +1,5 @@
 import { List, Space, Typography } from "antd";
-import BookComment from "./BookComment";
+import BookComment from "./bookComment";
 import { useState } from "react";
 
 const { Text } = Typography;

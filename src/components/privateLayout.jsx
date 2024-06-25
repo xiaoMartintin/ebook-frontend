@@ -1,9 +1,9 @@
 import { Layout, Space, Row, Col, Avatar } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
-import NavBar from "./NavBar";
+import NavBar from "./navBar";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getMe } from "../service/user";
+import { getMe } from "../service/userService";
 import { UserContext } from "../lib/context";
 
 export function PrivateLayout({ children }) {

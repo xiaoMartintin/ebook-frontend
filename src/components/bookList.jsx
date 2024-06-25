@@ -1,7 +1,5 @@
-// BookList.jsx
-
 import { List, Pagination, Space } from "antd";
-import BookCard from "./BookCard";
+import BookCard from "./bookCard";
 
 /**
  * 书籍列表组件

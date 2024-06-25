@@ -1,11 +1,8 @@
 // 导入 Ant Design 的布局和空间组件，以及 React Router 和 React 的必要功能
 import { Layout, Space, Row, Col, Avatar } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
-import NavBar from "./NavBar";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getMe } from "../service/user";
-import { UserContext } from "../lib/context";
+import NavBar from "./navBar";
+import { Link} from "react-router-dom";
 
 // 定义基本布局组件
 export function BasicLayout({ children }) {

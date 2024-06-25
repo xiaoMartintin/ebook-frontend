@@ -1,0 +1,12 @@
+.user-management-page {
+    padding: 20px;
+}
+
+.user-management-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ant-table {
+    margin-top: 20px;
+}

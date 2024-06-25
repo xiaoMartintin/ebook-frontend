@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Card, DatePicker, Button, Table } from "antd";
-import { PrivateLayout } from "../components/PrivateLayout";
-import { getStatistics } from "../service/statistics";
+import { PrivateLayout } from "../components/privateLayout";
+import { getStatistics } from "../service/statisticsService";
 import { SearchOutlined } from '@ant-design/icons';
-import "../css/StatisticsPage.css";
+import "../css/statisticsPage.css";
 
 const { RangePicker } = DatePicker;
 
