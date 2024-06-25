@@ -41,6 +41,7 @@ export default function NavBar() {
     ];
 
     const adminNavItems = [
+        { label: "HOME", value: "/", icon: <HomeOutlined /> },
         { label: "DASHBOARD", value: "/admin/dashboard", icon: <DashboardOutlined /> },
         { label: "BOOKS", value: "/admin/books", icon: <BookOutlined /> },
         { label: "ORDERS", value: "/admin/orders", icon: <OrderedListOutlined /> },

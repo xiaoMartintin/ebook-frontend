@@ -34,6 +34,7 @@ export default function AppRouter() {
                 <Route path="/statistics" element={<StatisticsPage />} />
                 {user && user.is_admin === 1 ? (
                     <>
+                        <Route path="/admin/" element={<HomePage />} />
                         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
                         <Route path="/admin/books" element={<BookManagementPage />} />
                         <Route path="/admin/orders" element={<OrderManagementPage />} />
