@@ -59,7 +59,7 @@ export default function OrderPage() {
 
     return (
         <PrivateLayout>
-            <Card className="card-container" style={{ maxWidth: 1200, margin: "20px auto" }} bordered={false}>
+            <Card className="card-container" style={{ maxWidth: 1200 }} bordered={false}>
                 <h1 className="order-title">My Orders</h1>
                 <Input.Search
                     placeholder="Enter Keyword"
