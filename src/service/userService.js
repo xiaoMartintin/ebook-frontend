@@ -38,12 +38,12 @@ export async function register(username, nickname, password, email) {
 
 
 // 获取所有用户
-export async function getAllUsers(search = "") {
-    const url = `${PREFIX}/admin/users?search=${encodeURIComponent(search)}`;
+export async function getAllUsers(search = "", pageIndex = 0, pageSize = 10) {
+    const url = `${PREFIX}/admin/users?search=${encodeURIComponent(search)}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
     let res;
 
     try {
-        res  = await getJson(url);
+        res = await getJson(url);
     } catch (e) {
         console.log(e);
         res = DUMMY_RESPONSE;

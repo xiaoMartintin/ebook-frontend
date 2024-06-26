@@ -1,0 +1,48 @@
+.card-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+    background-color: #ffffff;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-container:hover {
+    transform: scale(1.02);
+}
+
+.statistics-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00A3D9;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.ant-picker {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.ant-btn-primary {
+    background-color: #00A3D9;
+    border-color: #00A3D9;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.ant-btn-primary:hover {
+    background-color: #008cba;
+    border-color: #008cba;
+}
+
+.ant-table-thead > tr > th {
+    background-color: #00A3D9;
+    color: #fff;
+    font-size: 16px;
+}
+
+.ant-table-tbody > tr > td {
+    font-size: 14px;
+}

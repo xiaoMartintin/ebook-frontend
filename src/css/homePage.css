@@ -111,3 +111,20 @@
     justify-content: space-between;
     margin-top: 4px;
 }
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.pagination-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+
+

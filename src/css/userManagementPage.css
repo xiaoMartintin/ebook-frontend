@@ -1,12 +1,13 @@
 .user-management-page {
     padding: 20px;
+    margin: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'PT Serif', 'Helvetica', sans-serif;
     background-color: #fff;
     max-width: 1200px;
-    margin: 20px auto;
 }
+/*margin: 20px auto; 可以让元素在水平方向上自动居中，这是布局中经常使用的技巧，尤其是在要使一个块级元素在其父容器中居中时。*/
 
 .user-management-title {
     font-size: 32px; /* 增加字体大小 */

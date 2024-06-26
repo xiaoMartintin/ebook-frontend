@@ -11,6 +11,9 @@ const UserManagementPage = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalUsers, setTotalUsers] = useState(0);
 
     useEffect(() => {
         if (user && user.is_admin === 1) {
@@ -18,14 +21,15 @@ const UserManagementPage = () => {
         } else {
             message.error('Access denied');
         }
-    }, [user]);
+    }, [user, pageIndex, pageSize]);
 
     const fetchUsers = async (search = "") => {
         setLoading(true);
         try {
-            const result = await getAllUsers(search);
+            const result = await getAllUsers(search, pageIndex, pageSize);
             if (result.ok !== false) {
-                setUsers(result); // 假设result直接是用户数据的数组
+                setUsers(result.content);
+                setTotalUsers(result.totalElements); // 使用Spring Data JPA的分页返回
             } else {
                 message.error('Failed to fetch users');
             }
@@ -48,7 +52,13 @@ const UserManagementPage = () => {
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
+        setPageIndex(0); // 重置分页到第一页
         fetchUsers(event.target.value);
+    };
+
+    const handleTableChange = (pagination) => {
+        setPageIndex(pagination.current - 1); // Ant Design 的分页从 1 开始
+        setPageSize(pagination.pageSize);
     };
 
     const columns = [
@@ -113,7 +123,13 @@ const UserManagementPage = () => {
                     dataSource={users}
                     rowKey="id"
                     loading={loading}
-                    pagination={{ pageSize: 10 }}
+                    pagination={{
+                        current: pageIndex + 1,
+                        pageSize: pageSize,
+                        total: totalUsers,
+                        showSizeChanger: true
+                    }}
+                    onChange={handleTableChange}
                 />
             </Card>
         </PrivateLayout>

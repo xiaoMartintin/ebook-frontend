@@ -1,4 +1,4 @@
-import { DUMMY_RESPONSE, PREFIX, getJson, post } from "../utils/common";
+import { DUMMY_RESPONSE, PREFIX, getJson, post, put, del } from "../utils/common";
 
 export async function searchBooks(keyword, pageIndex, pageSize) {
     const url = `${PREFIX}/books?keyword=${keyword}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
@@ -59,6 +59,42 @@ export async function addBookComment(bookId, content) {
     let res;
     try {
         res = await post(url, { 'content': content });
+    } catch (e) {
+        console.log(e);
+        res = DUMMY_RESPONSE;
+    }
+    return res;
+}
+
+export async function addBook(book) {
+    const url = `${PREFIX}/books`;
+    let res;
+    try {
+        res = await post(url, book);
+    } catch (e) {
+        console.log(e);
+        res = DUMMY_RESPONSE;
+    }
+    return res;
+}
+
+export async function updateBook(id, book) {
+    const url = `${PREFIX}/books/${id}`;
+    let res;
+    try {
+        res = await put(url, book);
+    } catch (e) {
+        console.log(e);
+        res = DUMMY_RESPONSE;
+    }
+    return res;
+}
+
+export async function deleteBook(id) {
+    const url = `${PREFIX}/books/${id}`;
+    let res;
+    try {
+        res = await del(url);
     } catch (e) {
         console.log(e);
         res = DUMMY_RESPONSE;

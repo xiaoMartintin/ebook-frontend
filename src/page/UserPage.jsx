@@ -4,6 +4,7 @@ import { Card, Form, Input, Button, Avatar, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { PrivateLayout } from '../components/privateLayout';
 import { getMe } from '../service/userService';
+import UsernameAvatar from '../components/userAvatar';
 import '../css/userPage.css';
 
 export default function UserPage() {
@@ -54,7 +55,7 @@ export default function UserPage() {
                             >
                                 <Avatar
                                     size={80}
-                                    icon={user.avatar ? <img src={user.avatar} alt="avatar" /> : <UserOutlined />}
+                                    icon={user.avatar ? <img src={user.avatar} alt="avatar" /> : <UsernameAvatar username={user.nickname} />}
                                 />
                             </Upload>
                         </Form.Item>

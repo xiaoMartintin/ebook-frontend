@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, DatePicker, Button, Table, Row, Col, Statistic } from "antd";
+import { Card, DatePicker, Button, Table, Pagination, Statistic } from "antd";
 import { PrivateLayout } from "../components/privateLayout";
 import { getStatistics } from "../service/statisticsService";
 import { SearchOutlined } from '@ant-design/icons';
@@ -10,11 +10,13 @@ const { RangePicker } = DatePicker;
 export default function StatisticsPage() {
     const [statistics, setStatistics] = useState({ books: [], totalBooks: 0, totalAmount: 0.0 });
     const [dateRange, setDateRange] = useState([null, null]);
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageSize, setPageSize] = useState(8);
+    const [totalPage, setTotalPage] = useState(0);
 
     useEffect(() => {
-        // 默认加载时请求所有数据
         handleSearch();
-    }, []);
+    }, [pageIndex, pageSize]);
 
     const handleDateChange = (dates) => {
         setDateRange(dates ? dates : [null, null]);
@@ -24,10 +26,10 @@ export default function StatisticsPage() {
         const filters = {
             startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
             endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            pageIndex: pageIndex,
+            pageSize: pageSize
         };
         const response = await getStatistics(filters);
-
-        console.log("Response:", response); // 添加日志帮助调试
 
         if (response && typeof response === 'object') {
             const { bookQuantities = {}, bookTotalPrices = {}, totalBooks = 0, totalAmount = 0.0 } = response;
@@ -39,18 +41,32 @@ export default function StatisticsPage() {
                 key: key
             }));
 
-            console.log("Fetched Statistics:", fetchedStatistics); // 添加日志帮助调试
-
             setStatistics({ books: fetchedStatistics, totalBooks, totalAmount });
+            setTotalPage(response.totalPage || fetchedStatistics.length);
         } else {
             setStatistics({ books: [], totalBooks: 0, totalAmount: 0.0 });
+            setTotalPage(0);
         }
+    };
+
+    const handlePageChange = (page) => {
+        setPageIndex(page - 1);
+    };
+
+    const handlePageSizeChange = (current, size) => {
+        setPageSize(size);
+        setPageIndex(0);
     };
 
     const columns = [
         { title: 'Book Title', dataIndex: 'title', key: 'title' },
         { title: 'Quantity', dataIndex: 'quantity', key: 'quantity' },
-        { title: 'Total Price', dataIndex: 'totalPrice', key: 'totalPrice' }
+        {
+            title: 'Total Price',
+            dataIndex: 'totalPrice',
+            key: 'totalPrice',
+            render: (text) => `$${parseFloat(text).toFixed(2)}`
+        }
     ];
 
     return (
@@ -67,6 +83,18 @@ export default function StatisticsPage() {
                     Search
                 </Button>
                 <Table columns={columns} dataSource={statistics.books} rowKey="key" pagination={false} className="table-container" />
+                <div className="pagination-controls">
+                    <div className="pagination-center">
+                        <Pagination
+                            current={pageIndex + 1}
+                            pageSize={pageSize}
+                            onChange={handlePageChange}
+                            onShowSizeChange={handlePageSizeChange}
+                            total={totalPage}
+                            showSizeChanger
+                        />
+                    </div>
+                </div>
                 <div className="statistics-summary">
                     <div className="statistics-total-books">
                         <Statistic title="Total Books" value={statistics.totalBooks} />

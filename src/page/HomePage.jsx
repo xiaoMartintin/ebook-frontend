@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { Card, Space, Input, Button, Carousel, Row, Col, Image } from "antd";
+import { Card, Space, Input, Button, Carousel, Row, Col, Image, Select } from "antd";
 import { PrivateLayout } from "../components/privateLayout";
 import BookList from "../components/bookList";
 import { searchBooks } from "../service/bookService";
@@ -9,6 +9,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import "../css/homePage.css";
 
 const { Search } = Input;
+const { Option } = Select;
 
 export default function HomePage() {
     const [books, setBooks] = useState([]);
@@ -35,11 +36,15 @@ export default function HomePage() {
     }, [keyword, pageIndex, pageSize]);
 
     const handleSearch = keyword => {
-        setSearchParams({ "keyword": keyword, "pageIndex": 0, "pageSize": 8 });
+        setSearchParams({ "keyword": keyword, "pageIndex": 0, "pageSize": pageSize });
     };
 
     const handlePageChange = page => {
-        setSearchParams({ ...searchParams, pageIndex: page - 1 });
+        setSearchParams({ "keyword": keyword, "pageIndex": page - 1, "pageSize": pageSize });
+    };
+
+    const handlePageSizeChange = value => {
+        setSearchParams({ "keyword": keyword, "pageIndex": 0, "pageSize": value });
     };
 
     return (
@@ -88,14 +93,17 @@ export default function HomePage() {
                             ))}
                         </Carousel>
                     )}
-                    <BookList
-                        books={books}
-                        pageSize={pageSize}
-                        total={totalPage}
-                        current={pageIndex + 1}
-                        onPageChange={handlePageChange}
-                        className="book-list"
-                    />
+                    <div className="pagination-controls">
+                        <BookList
+                            books={books}
+                            pageSize={pageSize}
+                            total={totalPage}
+                            current={pageIndex + 1}
+                            onPageChange={handlePageChange}
+                            onPageSizeChange={handlePageSizeChange} // 添加这个属性
+                            className="book-list"
+                        />
+                    </div>
                 </Space>
             </Card>
         </PrivateLayout>

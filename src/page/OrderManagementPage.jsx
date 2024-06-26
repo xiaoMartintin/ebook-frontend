@@ -60,7 +60,7 @@ export default function OrderManagementPage() {
     return (
         <PrivateLayout>
             <Card className="card-container" style={{ maxWidth: 1200 }} bordered={false}>
-                <h1 className="order-title">All Orders</h1>
+                <h1 className="order-title">Order Management</h1>
                 <Input.Search
                     placeholder="Enter Keyword"
                     value={searchTerm}
