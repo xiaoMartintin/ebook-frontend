@@ -8,37 +8,35 @@ import "../css/orderManagementPage.css"; // 导入自定义样式
 
 const { RangePicker } = DatePicker;
 
-/**
- * OrderManagementPage 组件用于展示用户的订单信息。
- * 使用 useEffect 钩子在组件加载时获取订单数据，并通过 OrderTable 组件显示。
- *
- * @returns {JSX.Element} 返回订单页面的布局。
- */
 export default function OrderManagementPage() {
-    const [orders, setOrders] = useState([]);//使用 useState 钩子管理订单数据状态
+    const [orders, setOrders] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [dateRange, setDateRange] = useState([null, null]);
+    const [totalItems, setTotalItems] = useState(0);
+    const [pageIndex, setPageIndex] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
 
     const initOrders = async (filters = {}) => {
-        const fetchedOrders = await getAllOrders(filters); //
-        console.log("Fetched orders:", fetchedOrders);
-
-        // 对订单数据进行必要的格式化
+        const fetchedOrders = await getAllOrders(filters);
         const formattedOrders = fetchedOrders.map(order => ({
             ...order,
             createdAt: new Date(order.time).toLocaleString(),
-            items: order.orderItems// 确保 orderItems 在 orders 中
+            items: order.orderItems
         }));
-
         setOrders(formattedOrders);
-        console.log("Orders state after fetch:", formattedOrders);
-
-
+        setTotalItems(fetchedOrders.length);
     };
 
     useEffect(() => {
-        initOrders();
-    }, []); // 空数组依赖表示仅执行一次，相当于 componentDidMount
+        const filters = {
+            keyword: searchTerm,
+            startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
+            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            pageIndex: pageIndex - 1,
+            pageSize: pageSize
+        };
+        initOrders(filters);
+    }, [searchTerm, dateRange, pageIndex, pageSize]);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -49,12 +47,18 @@ export default function OrderManagementPage() {
     };
 
     const handleSearch = () => {
+        setPageIndex(1);
         const filters = {
             keyword: searchTerm,
             startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
-            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : ''
         };
         initOrders(filters);
+    };
+
+    const handlePageChange = (page, pageSize) => {
+        setPageIndex(page);
+        setPageSize(pageSize);
     };
 
     return (
@@ -77,7 +81,13 @@ export default function OrderManagementPage() {
                     onChange={handleDateChange}
                     style={{ marginBottom: '20px', width: '100%' }}
                 />
-                <OrderTable orders={orders} />
+                <OrderTable
+                    orders={orders}
+                    totalItems={totalItems}
+                    pageSize={pageSize}
+                    currentPage={pageIndex}
+                    onPageChange={handlePageChange}
+                />
             </Card>
         </PrivateLayout>
     );
