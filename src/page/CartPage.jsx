@@ -1,33 +1,40 @@
 import { useEffect, useState } from "react";
 import { getCartItems } from "../service/cartService";
-import { Card, Input, Button } from "antd";
-import CartItemTable from "../components/cartTable";
+import { Card, Input, Button, Select, Pagination } from "antd";
+import CartItemTable from "../components/cartItemTable";
 import { PrivateLayout } from "../components/privateLayout";
 import { SearchOutlined } from '@ant-design/icons';
 import "../css/cartPage.css";
 
-/**
- * CartPage 组件，用于展示用户的购物车页面。
- * 在页面加载时调用 initCartItems 函数获取购物车中的商品，并显示在 CartItemTable 组件中。
- *
- * @returns {JSX.Element} 返回购物车页面的布局。
- */
 export default function CartPage() {
     const [cartItems, setCartItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageSize, setPageSize] = useState(8);
+    const [totalItems, setTotalItems] = useState(0);
 
     const initCartItems = async () => {
-        const fetchedCartItems = await getCartItems();
-        setCartItems(fetchedCartItems); // 确保 cartItems 是一个数组
-        console.log("Cart items state after fetch:", fetchedCartItems); // 打印更新后的状态
+        const response = await getCartItems(searchTerm, pageIndex, pageSize);
+        setCartItems(Array.isArray(response.items) ? response.items : []);
+        setTotalItems(response.total || 0);
     };
 
     useEffect(() => {
         initCartItems();
-    }, []);
+    }, [searchTerm, pageIndex, pageSize]);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
+        setPageIndex(0);
+    };
+
+    const handlePageChange = (page) => {
+        setPageIndex(page - 1);
+    };
+
+    const handlePageSizeChange = (current, size) => {
+        setPageSize(size);
+        setPageIndex(0);
     };
 
     const filteredItems = (cartItems || []).filter(item =>
@@ -50,6 +57,19 @@ export default function CartPage() {
                     style={{ marginBottom: '20px' }}
                 />
                 <CartItemTable cartItems={filteredItems} onMutate={initCartItems} />
+                <div className="pagination-controls">
+                    <div className="pagination-center">
+                        <Pagination
+                            current={pageIndex + 1}
+                            pageSize={pageSize}
+                            onChange={handlePageChange}
+                            onShowSizeChange={handlePageSizeChange}
+                            total={totalItems}
+                            showSizeChanger
+                            pageSizeOptions={['2','8', '16', '24', '32', '40']}
+                        />
+                    </div>
+                </div>
             </Card>
         </PrivateLayout>
     );

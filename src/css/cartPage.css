@@ -1,11 +1,14 @@
-/* cartPage.css */
-
 .card-container {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     font-family: 'PT Serif', 'Helvetica', sans-serif;
     background-color: #ffffff;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-container:hover {
+    transform: scale(1.02);
 }
 
 .cart-title {
@@ -18,13 +21,37 @@
 
 .ant-input-search {
     width: 100%;
+    border-radius: 5px;
 }
 
-.search-button {
-    font-family: "PT Serif";
-    width: 100%; /* 使按钮占满水平空间 */
-    text-align: center; /* 使按钮内的文本和图标居中 */
+.ant-picker {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.ant-btn-primary {
+    background-color: #00A3D9;
+    border-color: #00A3D9;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.ant-btn-primary:hover {
+    background-color: #008cba;
+    border-color: #008cba;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.pagination-center {
+    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
 }

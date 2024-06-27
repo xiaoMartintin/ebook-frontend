@@ -5,7 +5,7 @@ export async function getMe() {
     let me = null;
     try {
         me = await getJson(url);
-        console.log(me);
+        // console.log(me);
     } catch(e) {
         console.log(e);
     }
@@ -59,7 +59,7 @@ export async function changeUserStatus(userId, isEnabled) {
 
     try {
         result = await put(url, { is_enabled: isEnabled });
-        console.log(result);
+        // console.log(result);
     } catch (e) {
         console.log(e);
         result = {

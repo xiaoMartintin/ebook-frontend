@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { Card, Space, Input, Button, Select, Table, Form, Modal, message, Pagination } from "antd";
+import { Card, Space, Input, Button, Select, Table, Form, Modal, message, Pagination, Upload } from "antd";
 import { PrivateLayout } from "../components/privateLayout";
 import { searchBooks, addBook, updateBook, deleteBook } from "../service/bookService";
-import { SearchOutlined, PlusOutlined, EditOutlined, DeleteOutlined, BookOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { SearchOutlined, PlusOutlined, EditOutlined, DeleteOutlined, BookOutlined, ExclamationCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import "../css/bookManagementPage.css";
 
 const { Search } = Input;
@@ -20,6 +20,7 @@ export default function BookManagementPage() {
     const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 8;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentBook, setCurrentBook] = useState(null);
+    const [coverBase64, setCoverBase64] = useState(null);
 
     const getBooks = async () => {
         try {
@@ -51,11 +52,13 @@ export default function BookManagementPage() {
 
     const showAddBookModal = () => {
         setCurrentBook(null);
+        setCoverBase64(null);
         setIsModalVisible(true);
     };
 
     const showEditBookModal = (book) => {
         setCurrentBook({ ...book });
+        setCoverBase64(null);
         setIsModalVisible(true);
     };
 
@@ -88,6 +91,34 @@ export default function BookManagementPage() {
     };
 
     const handleOk = async (values) => {
+        try {
+            if (coverBase64) {
+                values.cover = coverBase64; // 将base64字符串赋值给cover
+            }
+            console.log("Submitting values:", values); // 添加日志检查提交的数据格式
+            await saveBook(values);
+        } catch (error) {
+            message.error('Failed to save book');
+        }
+    };
+
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    };
+
+    const handleBeforeUpload = async (file) => {
+        const base64 = await getBase64(file);
+        setCoverBase64(base64);
+        // console.log("Base64 Cover:", base64); // 检查 base64 编码的封面
+        return false; // 防止自动上传
+    };
+
+    const saveBook = async (values) => {
         try {
             if (currentBook) {
                 await updateBook(currentBook.id, values);
@@ -131,7 +162,7 @@ export default function BookManagementPage() {
 
     return (
         <PrivateLayout>
-            <Card className="card-container" style={{borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)'}}>
+            <Card className="card-container" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
                 <h1 className="book-management-title">Book Management</h1>
                 <div className="search-add-container">
                     <Input.Search
@@ -183,8 +214,15 @@ export default function BookManagementPage() {
                     onFinish={handleOk}
                     key={currentBook ? currentBook.id : 'new'}
                 >
-                    <Form.Item name="cover" label="Cover" rules={[{ required: true, message: 'Please input the cover URL!' }]}>
-                        <Input />
+                    <Form.Item name="cover" label="Cover" rules={[{ required: true, message: 'Please upload the cover!' }]}>
+                        <Upload
+                            listType="picture"
+                            maxCount={1}
+                            accept="image/*"
+                            beforeUpload={handleBeforeUpload}  // 使用 handleBeforeUpload 函数处理文件上传前的操作
+                        >
+                            <Button icon={<UploadOutlined />}>Upload Cover</Button>
+                        </Upload>
                     </Form.Item>
                     <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Please input the title!' }]}>
                         <Input />
@@ -214,5 +252,11 @@ export default function BookManagementPage() {
         </PrivateLayout>
     );
 }
+
+//我们将文件上传处理移动到了 beforeUpload 中，
+// 这样可以确保在文件选择后立即读取文件并将其转换为 Base64 格式。这也确保了文件在上传前已经被正确处理，避免了状态未更新的问题。
+
 //在 showEditBookModal 函数中，使用 setCurrentBook({ ...book }) 确保 currentBook 正确更新。
 // 在 Form 组件中添加 key={currentBook ? currentBook.id : 'new'} 属性，确保 Form 在 currentBook 变化时重新渲染。
+// handleOk 函数异步读取文件的 base64 编码后，直接在 FileReader 的 onload 回调中调用 saveBook，而没有等待编码完成。
+// 我们需要确保在文件被成功转换为 base64 编码后，再进行保存操作。

@@ -1,17 +1,21 @@
 import { DUMMY_RESPONSE, PREFIX, del, getJson, put } from "../utils/common";
 
-export async function getCartItems() {
-    const url = `${PREFIX}/cart`;
-    let cartItems;
+export async function getCartItems(searchTerm = "", pageIndex = 0, pageSize = 8) {
+    const url = `${PREFIX}/cart?searchTerm=${searchTerm}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
+    let response;
     try {
-        cartItems = await getJson(url);
-        console.log("Fetched cart items from API:", cartItems); // 添加调试信息
+        response = await getJson(url);
+        console.log("Fetched cart items from API:", response);
     } catch (e) {
         console.log(e);
-        cartItems = [];
+        response = { data: { content: [], totalElements: 0 } };
     }
-    return Array.isArray(cartItems.data) ? cartItems.data : []; // 确保返回一个数组，并提取data字段
+    return {
+        items: response.data.content || [], // 从 response.data.content 中提取购物车项
+        total: response.data.totalElements || 0 // 从 response.data.totalElements 中提取总数
+    };
 }
+
 
 export async function deleteCartItem(id) {
     const url = `${PREFIX}/cart/${id}`;
