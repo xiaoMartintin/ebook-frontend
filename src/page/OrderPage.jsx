@@ -17,21 +17,29 @@ export default function OrderPage() {
     const [pageSize, setPageSize] = useState(5);
 
     const initOrders = async (filters = {}) => {
-        const fetchedOrders = await getOrders(filters);
-        const formattedOrders = fetchedOrders.map(order => ({
-            ...order,
-            createdAt: new Date(order.time).toLocaleString(),
-            items: order.orderItems
-        }));
-        setOrders(formattedOrders);
-        setTotalItems(fetchedOrders.length);
+        const response = await getOrders(filters);
+        console.log("response: ", response);
+        if (response) {
+            const fetchedOrders = response.content || [];
+            console.log("fetchedOrders: ", fetchedOrders);
+            const formattedOrders = fetchedOrders.map(order => ({
+                ...order,
+                createdAt: new Date(order.time).toLocaleString(),
+                items: order.orderItems
+            }));
+            setOrders(formattedOrders);
+            setTotalItems(response.totalElements || fetchedOrders.length); // Use totalElements for pagination
+        } else {
+            setOrders([]);
+            setTotalItems(0);
+        }
     };
 
     useEffect(() => {
         const filters = {
             keyword: searchTerm,
-            startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
-            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            startDate: dateRange && dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
+            endDate: dateRange && dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
             pageIndex: pageIndex - 1,
             pageSize: pageSize
         };
@@ -43,15 +51,17 @@ export default function OrderPage() {
     };
 
     const handleDateChange = (dates) => {
-        setDateRange(dates);
+        setDateRange(dates || [null, null]);
     };
 
     const handleSearch = () => {
         setPageIndex(1);
         const filters = {
             keyword: searchTerm,
-            startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
-            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : ''
+            startDate: dateRange && dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
+            endDate: dateRange && dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            pageIndex: 0,
+            pageSize: pageSize
         };
         initOrders(filters);
     };
