@@ -24,22 +24,21 @@
     border-radius: 5px;
 }
 
-.ant-picker {
-    width: 100%;
-    border-radius: 5px;
-}
-
 .ant-btn-primary {
     background-color: #00A3D9;
     border-color: #00A3D9;
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
+    background-image: linear-gradient(to right, #00a3d9, #00c6ff);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .ant-btn-primary:hover {
     background-color: #008cba;
     border-color: #008cba;
+    background-image: linear-gradient(to right, #008cba, #009be6);
+    transform: scale(1.05);
 }
 
 .pagination-controls {
@@ -54,4 +53,12 @@
     flex: 1;
     display: flex;
     justify-content: center;
+}
+
+.table-container .ant-table-tbody > tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table-container .ant-table-tbody > tr:hover {
+    background-color: #e6f7ff;
 }

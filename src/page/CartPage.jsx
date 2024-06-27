@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCartItems } from "../service/cartService";
-import { Card, Input, Button, Select, Pagination } from "antd";
+import { Card, Input, Button, Pagination } from "antd";
 import CartItemTable from "../components/cartItemTable";
 import { PrivateLayout } from "../components/privateLayout";
 import { SearchOutlined } from '@ant-design/icons';
@@ -37,10 +37,6 @@ export default function CartPage() {
         setPageIndex(0);
     };
 
-    const filteredItems = (cartItems || []).filter(item =>
-        item.book.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
     return (
         <PrivateLayout>
             <Card className="card-container" bordered={false}>
@@ -50,13 +46,13 @@ export default function CartPage() {
                     value={searchTerm}
                     onChange={handleSearchChange}
                     enterButton={
-                        <Button type="primary" icon={<SearchOutlined />} onClick={handleSearchChange} className="search-button">
+                        <Button type="primary" icon={<SearchOutlined />} onClick={initCartItems} className="search-button">
                             Search
                         </Button>
                     }
                     style={{ marginBottom: '20px' }}
                 />
-                <CartItemTable cartItems={filteredItems} onMutate={initCartItems} />
+                <CartItemTable cartItems={cartItems} onMutate={initCartItems} />
                 <div className="pagination-controls">
                     <div className="pagination-center">
                         <Pagination

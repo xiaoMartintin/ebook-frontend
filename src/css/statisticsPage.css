@@ -3,7 +3,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'PT Serif', 'Helvetica', sans-serif;
-    background-color: #ffffff;
+    background-color: #f7f9fc;
     transition: transform 0.2s ease-in-out;
 }
 
@@ -12,11 +12,15 @@
 }
 
 .statistics-title {
-    ont-size: 32px; /* 增加字体大小 */
+    font-size: 32px;
     font-weight: bold;
     color: #00A3D9;
     text-align: center;
-    margin-bottom: 40px; /* 增加间距 */
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'PT Serif', serif;
 }
 
 .ant-input-search {
@@ -35,22 +39,30 @@
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
+    background-image: linear-gradient(to right, #00a3d9, #00c6ff);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .ant-btn-primary:hover {
     background-color: #008cba;
     border-color: #008cba;
+    background-image: linear-gradient(to right, #008cba, #009be6);
+    transform: scale(1.05);
 }
 
-.table-container {
-    margin-top: 20px;
+.table-container .ant-table-tbody > tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table-container .ant-table-tbody > tr:hover {
+    background-color: #e6f7ff;
 }
 
 .statistics-summary {
     margin-top: 20px;
     padding: 20px;
-    border-top: 2px solid #f0f0f0;
-    background-color: #f9f9f9;
+    border-top: 2px solid #e0e0e0;
+    background-color: #ffffff;
     border-radius: 5px;
     display: flex;
     justify-content: space-around;
@@ -85,14 +97,8 @@
 
 .pagination-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 20px;
     width: 100%;
-}
-
-.pagination-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
 }
