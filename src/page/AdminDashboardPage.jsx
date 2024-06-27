@@ -17,8 +17,10 @@ export default function AdminDashboardPage() {
     const [userStats, setUserStats] = useState([]);
     const [salesPageIndex, setSalesPageIndex] = useState(1);
     const [salesPageSize, setSalesPageSize] = useState(10);
+    const [salesTotalItems, setSalesTotalItems] = useState(0);
     const [userPageIndex, setUserPageIndex] = useState(1);
     const [userPageSize, setUserPageSize] = useState(10);
+    const [userTotalItems, setUserTotalItems] = useState(0);
 
     useEffect(() => {
         handleSearch();
@@ -29,20 +31,31 @@ export default function AdminDashboardPage() {
     };
 
     const handleSearch = async () => {
-        const filters = {
+        const salesFilters = {
             startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
-            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : ''
+            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            pageIndex: salesPageIndex - 1,
+            pageSize: salesPageSize
         };
 
-        const salesResponse = await getSalesStatistics(filters);
-        const userResponse = await getUserPurchaseStatistics(filters);
+        const userFilters = {
+            startDate: dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '',
+            endDate: dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '',
+            pageIndex: userPageIndex - 1,
+            pageSize: userPageSize
+        };
+
+        const salesResponse = await getSalesStatistics(salesFilters);
+        const userResponse = await getUserPurchaseStatistics(userFilters);
 
         if (salesResponse && salesResponse.sales) {
             setSalesStats(salesResponse.sales);
+            setSalesTotalItems(salesResponse.totalItems);
         }
 
         if (userResponse && userResponse.users) {
             setUserStats(userResponse.users);
+            setUserTotalItems(userResponse.totalItems);
         }
     };
 
@@ -54,12 +67,6 @@ export default function AdminDashboardPage() {
     const handleUserPageChange = (page, pageSize) => {
         setUserPageIndex(page);
         setUserPageSize(pageSize);
-    };
-
-    const getPaginatedData = (data, pageIndex, pageSize) => {
-        const startIndex = (pageIndex - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-        return data.slice(startIndex, endIndex);
     };
 
     const salesColumns = [
@@ -90,18 +97,18 @@ export default function AdminDashboardPage() {
                     </Button>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab={<span><BarChartOutlined /> Sales Ranking</span>} key="1">
-                            <Table columns={salesColumns} dataSource={getPaginatedData(salesStats, salesPageIndex, salesPageSize)} rowKey="title" pagination={false} />
+                            <Table columns={salesColumns} dataSource={salesStats} rowKey="title" pagination={false} />
                             <Pagination
                                 current={salesPageIndex}
                                 pageSize={salesPageSize}
-                                total={salesStats.length}
+                                total={salesTotalItems}
                                 onChange={handleSalesPageChange}
                                 showSizeChanger
                                 showQuickJumper
-                                pageSizeOptions={['10', '20', '30', '40']}
+                                pageSizeOptions={['2', '10', '20', '30', '40']}
                             />
                             <ResponsiveContainer width="100%" height={400}>
-                                <BarChart data={getPaginatedData(salesStats, salesPageIndex, salesPageSize)}>
+                                <BarChart data={salesStats}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="title" />
                                     <YAxis />
@@ -112,18 +119,18 @@ export default function AdminDashboardPage() {
                             </ResponsiveContainer>
                         </TabPane>
                         <TabPane tab={<span><UserOutlined /> User Purchase Ranking</span>} key="2">
-                            <Table columns={userColumns} dataSource={getPaginatedData(userStats, userPageIndex, userPageSize)} rowKey="username" pagination={false} />
+                            <Table columns={userColumns} dataSource={userStats} rowKey="username" pagination={false} />
                             <Pagination
                                 current={userPageIndex}
                                 pageSize={userPageSize}
-                                total={userStats.length}
+                                total={userTotalItems}
                                 onChange={handleUserPageChange}
                                 showSizeChanger
                                 showQuickJumper
-                                pageSizeOptions={['10', '20', '30', '40']}
+                                pageSizeOptions={['2', '10', '20', '30', '40']}
                             />
                             <ResponsiveContainer width="100%" height={400}>
-                                <BarChart data={getPaginatedData(userStats, userPageIndex, userPageSize)}>
+                                <BarChart data={userStats}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="username" />
                                     <YAxis />

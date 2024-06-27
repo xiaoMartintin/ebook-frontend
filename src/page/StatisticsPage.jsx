@@ -8,10 +8,11 @@ import "../css/statisticsPage.css";
 const { RangePicker } = DatePicker;
 
 export default function StatisticsPage() {
-    const [statistics, setStatistics] = useState({ books: [], totalBooks: 0, totalAmount: 0.0 });
+    const [statistics, setStatistics] = useState({books: [], totalBooks: 0, totalAmount: 0.0});
     const [dateRange, setDateRange] = useState([null, null]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const [totalItems, setTotalItems] = useState(0);
 
     useEffect(() => {
         handleSearch();
@@ -31,18 +32,13 @@ export default function StatisticsPage() {
         const response = await getStatistics(filters);
 
         if (response && typeof response === 'object') {
-            const { bookQuantities = {}, bookTotalPrices = {}, totalBooks = 0, totalAmount = 0.0 } = response;
+            const { books = [], totalBooks = 0, totalAmount = 0.0, totalItems = 0 } = response;
 
-            const fetchedStatistics = Object.keys(bookQuantities).map(key => ({
-                title: key,
-                quantity: bookQuantities[key],
-                totalPrice: bookTotalPrices[key],
-                key: key
-            }));
-
-            setStatistics({ books: fetchedStatistics, totalBooks, totalAmount });
+            setStatistics({ books, totalBooks, totalAmount });
+            setTotalItems(totalItems);
         } else {
             setStatistics({ books: [], totalBooks: 0, totalAmount: 0.0 });
+            setTotalItems(0);
         }
     };
 
@@ -52,8 +48,8 @@ export default function StatisticsPage() {
     };
 
     const columns = [
-        { title: 'Book Title', dataIndex: 'title', key: 'title' },
-        { title: 'Quantity', dataIndex: 'quantity', key: 'quantity' },
+        {title: 'Book Title', dataIndex: 'title', key: 'title'},
+        {title: 'Quantity', dataIndex: 'quantity', key: 'quantity'},
         {
             title: 'Total Price',
             dataIndex: 'totalPrice',
@@ -64,36 +60,40 @@ export default function StatisticsPage() {
 
     return (
         <PrivateLayout>
-            <Card className="card-container" style={{ maxWidth: 1200, margin: "20px", padding: "20px" }} bordered={false}>
+            <Card className="card-container" style={{maxWidth: 1200, margin: "20px", padding: "20px"}} bordered={false}>
                 <h1 className="statistics-title">
-                    <CrownOutlined style={{ color: '#FFD700', marginRight: '10px' }} />
+                    <CrownOutlined style={{color: '#FFD700', marginRight: '10px'}}/>
                     My Purchase Statistics
                 </h1>
                 <RangePicker
                     value={dateRange}
                     onChange={handleDateChange}
                     className="ant-picker"
-                    style={{ marginBottom: '20px' }}
+                    style={{marginBottom: '20px'}}
                 />
-                <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch} className="ant-btn-primary" style={{ width: '100%', marginBottom: '20px' }}>
+                <Button type="primary" icon={<SearchOutlined/>} onClick={handleSearch} className="ant-btn-primary"
+                        style={{width: '100%', marginBottom: '20px'}}>
                     Search
                 </Button>
-                <Table columns={columns} dataSource={statistics.books} rowKey="key" pagination={false} className="table-container" />
+                <Table columns={columns} dataSource={statistics.books} rowKey="key" pagination={false}
+                       className="table-container"/>
                 <div className="pagination-controls">
                     <Pagination
                         current={currentPage}
                         pageSize={pageSize}
-                        total={statistics.books.length}
+                        total={totalItems}
                         onChange={handlePageChange}
                         showSizeChanger
+                        pageSizeOptions={['2', '8', '16', '24', '32', '40']}
                     />
                 </div>
                 <div className="statistics-summary">
                     <div className="statistics-total-books">
-                        <Statistic title="Total Books" value={statistics.totalBooks} prefix={<BookOutlined />} />
+                        <Statistic title="Total Books" value={statistics.totalBooks} prefix={<BookOutlined/>}/>
                     </div>
                     <div className="statistics-total-amount">
-                        <Statistic title="Total Amount" value={`${statistics.totalAmount.toFixed(2)}`} prefix={<DollarOutlined />} />
+                        <Statistic title="Total Amount" value={`${statistics.totalAmount.toFixed(2)}`}
+                                   prefix={<DollarOutlined/>}/>
                     </div>
                 </div>
             </Card>
