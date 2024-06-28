@@ -48,15 +48,21 @@ export default function CartItemTable({ cartItems, onMutate }) {
     const handleQuantityChange = async (id, quantity) => {
         let res = await changeCartItemQuantity(id, quantity);
         if (res.ok) {
-            items.filter(item => item.id === id)[0].quantity = quantity;
-            let selected = selectedItems.find(item => item.id === id);
-            if (selected) {
-                selected.quantity = quantity;
-                setSelectedItems([...selectedItems]);
+            const item = items.find(item => item.id === id);
+            if (item) {
+                item.quantity = quantity;
+                let selected = selectedItems.find(item => item.id === id);
+                if (selected) {
+                    selected.quantity = quantity;
+                    setSelectedItems([...selectedItems]);
+                }
+                setItems([...items]);
             }
-            setItems([...items]);
+        } else {
+            messageApi.error('Not enough inventory');
         }
     }
+
 
     const columns = [
         {

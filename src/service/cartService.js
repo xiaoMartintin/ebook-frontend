@@ -1,4 +1,5 @@
 import { DUMMY_RESPONSE, PREFIX, del, getJson, put } from "../utils/common";
+import {message} from "antd";
 
 export async function getCartItems(searchTerm = "", pageIndex = 0, pageSize = 8) {
     const url = `${PREFIX}/cart?searchTerm=${searchTerm}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
@@ -38,6 +39,9 @@ export async function addCartItem(bookId) {
         console.log(e);
         response = DUMMY_RESPONSE;
     }
+    if (!response.ok) {
+        message.error('Not enough inventory');
+    }
     return response;
 }
 
@@ -49,6 +53,9 @@ export async function changeCartItemQuantity(id, quantity) {
     } catch (e) {
         console.log(e);
         response = DUMMY_RESPONSE;
+    }
+    if (!response.ok) {
+        message.error('Not enough inventory');
     }
     return response;
 }
