@@ -12,7 +12,7 @@ export async function placeOrder(orderInfo) {
     return res;
 }
 
-export async function getOrders(filters = {}) {
+export async function getOrders(filters = {}) {//filters是一个默认为空的对象
     const { keyword = '', startDate = '', endDate = '', pageIndex = 0, pageSize = 10 } = filters;
     const url = `${PREFIX}/order?keyword=${encodeURIComponent(keyword)}&startDate=${startDate}&endDate=${endDate}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
     let response;

@@ -15,6 +15,7 @@ export default function HomePage() {
     const [books, setBooks] = useState([]);
     const [totalPage, setTotalPage] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
+
     const keyword = searchParams.get("keyword") || "";
     const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
     const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 8;
