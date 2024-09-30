@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
@@ -13,12 +13,39 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const { setUser } = useContext(UserContext);
 
+    // 定义一个格式化函数，将毫秒值转换为时分秒毫秒的格式
+    const formatDuration = (duration) => {
+        let milliseconds = parseInt(duration, 10); // 将字符串转换为整数
+        let hours = Math.floor(milliseconds / (1000 * 60 * 60)); // 小时
+        milliseconds = milliseconds % (1000 * 60 * 60); // 剩余毫秒数
+
+        let minutes = Math.floor(milliseconds / (1000 * 60)); // 分钟
+        milliseconds = milliseconds % (1000 * 60); // 剩余毫秒数
+
+        let seconds = Math.floor(milliseconds / 1000); // 秒
+        milliseconds = milliseconds % 1000; // 剩余毫秒数
+
+        // 返回格式化后的字符串
+        return `${hours}小时${minutes}分${seconds}秒${milliseconds}毫秒`;
+    };
+
+    // 检查并显示上次会话时长
+    useEffect(() => {
+        const sessionDuration = localStorage.getItem('sessionDuration');
+        if (sessionDuration) {
+            // 将 sessionDuration 格式化为时分秒毫秒，并在 message 中显示
+            const formattedDuration = formatDuration(sessionDuration);
+            messageApi.success(`您的上次会话时长为：${formattedDuration}`, 5); // 显示5秒钟的成功提示
+            localStorage.removeItem('sessionDuration'); // 显示后清除本地存储中的数据
+        }
+    }, [messageApi]);
+
     const onSubmit = async (values) => {
         const { username, password } = values;
         const res = await loginService(username, password);
         handleBaseApiResponse(res, messageApi, () => {
-            setUser(res.data);  // assuming res.data contains the user information
-            localStorage.setItem('user', JSON.stringify(res.data));  // persist user info
+            setUser(res); // 更新：使用 res 而不是 res.data
+            localStorage.setItem('user', JSON.stringify(res)); // persist user info
             navigate("/");
         });
     };
@@ -75,7 +102,6 @@ const LoginPage = () => {
 
                     <div style={{ marginBlockEnd: 24, width: '100%', textAlign: 'center' }}>
                         <Link to='/register' style={{ marginRight: '10px' }}>New Account? Register</Link>
-                        {/* 忘记密码链接没写不好意思，你点了没用 */}
                         <a href="#/">Forgot password?</a>
                     </div>
                 </LoginForm>
