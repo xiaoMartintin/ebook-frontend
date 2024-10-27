@@ -1,4 +1,4 @@
-import { PREFIX, post} from "../utils/common";
+import { PREFIX, post } from "../utils/common";
 
 export async function loginService(username, password) {
     const url = `${PREFIX}/login`;
@@ -6,6 +6,10 @@ export async function loginService(username, password) {
 
     try {
         result = await post(url, { username, password });
+        if (result.ok) {
+            // 登录成功时将 userId 存储在 sessionStorage 中
+            sessionStorage.setItem("userId", result.data.id);
+        }
     } catch (e) {
         console.log(e);
         result = {

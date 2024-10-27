@@ -1,45 +1,35 @@
 import { DUMMY_RESPONSE, PREFIX, post, getJson } from "../utils/common";
-import SockJS from "sockjs-client";
-import Stomp from "stompjs";
+import { createWebSocket, closeWebSocket } from "../utils/websocketUtils";
 
-let stompClient = null;
-
-export async function placeOrder(orderInfo) {
+export async function placeOrder(orderInfo, onOrderUpdate) {
     const url = `${PREFIX}/order`;
     let res;
 
     try {
-        // 创建 WebSocket 连接
-        const socket = new SockJS(`${PREFIX}/order-websocket`);
-        stompClient = Stomp.over(socket);
-
-        // 连接到 WebSocket
-        stompClient.connect({}, (frame) => {
-            console.log('Connected to WebSocket:', frame);
-
-            // 订阅订单更新消息频道
-            stompClient.subscribe(`/topic/order/${orderInfo.userId}`, (message) => {
-                const orderUpdate = JSON.parse(message.body);
-                console.log('Order update received:', orderUpdate);
-
-                // 这里可以根据 orderUpdate 的状态来更新前端界面
-                if (orderUpdate.ok) {
-                    alert("Order processed successfully: " + orderUpdate.message);
-                } else {
-                    alert("Order processing failed: " + orderUpdate.message);
+        const userId = sessionStorage.getItem("userId");
+        if (userId) {
+            createWebSocket(userId, (orderUpdate) => {
+                console.log("Order update received in placeOrder:", orderUpdate); // 调试输出
+                if (onOrderUpdate) {
+                    onOrderUpdate(orderUpdate.message); // 将 WebSocket 消息传递给 CartItemTable
                 }
             });
-        });
+        } else {
+            console.error("User ID is undefined, cannot establish WebSocket connection.");
+        }
 
-        // 发送订单请求
         res = await post(url, orderInfo);
     } catch (e) {
         console.error("Error placing order:", e);
         res = DUMMY_RESPONSE;
+    } finally {
+        closeWebSocket();
     }
 
     return res;
 }
+
+
 
 export async function getOrders(filters = {}) {
     const { keyword = '', startDate = '', endDate = '', pageIndex = 0, pageSize = 10 } = filters;
@@ -55,7 +45,7 @@ export async function getOrders(filters = {}) {
     }
 
     if (response.ok && response.data && Array.isArray(response.data.content)) {
-        console.log("Orders data:", JSON.stringify(response.data.content, null, 2));
+        // console.log("Orders data:", JSON.stringify(response.data.content, null, 2));
         return {
             content: response.data.content,
             totalElements: response.data.totalElements

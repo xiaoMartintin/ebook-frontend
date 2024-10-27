@@ -5,6 +5,7 @@ import { handleBaseApiResponse } from "../utils/message";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PlaceOrderModal from "./orderModal";
+import { message } from "antd";
 
 /**
  * 创建购物车商品表格组件，接收 cartItems 和 onMutate 两个 props
@@ -18,6 +19,7 @@ export default function CartItemTable({ cartItems, onMutate }) {
     const [items, setItems] = useState(cartItems);
     const [showModal, setShowModal] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [orderUpdateMessage, setOrderUpdateMessage] = useState(""); // 新增状态，用于存储 WebSocket 消息
 
     const handleDeleteItem = async (id) => {
         let res = await deleteCartItem(id);
@@ -30,6 +32,15 @@ export default function CartItemTable({ cartItems, onMutate }) {
     useEffect(() => {
         setItems(cartItems);
     }, [cartItems]);
+
+    // 使用 useEffect 监听 WebSocket 消息变化
+    useEffect(() => {
+        if (orderUpdateMessage) {
+            console.log("WebSocket Message Received:", orderUpdateMessage); // 调试输出
+            message.info(orderUpdateMessage); // 弹出 WebSocket 消息
+        }
+    }, [orderUpdateMessage]);
+
 
     const handleOpenModal = () => {
         setShowModal(true);
@@ -62,7 +73,6 @@ export default function CartItemTable({ cartItems, onMutate }) {
             messageApi.error('Not enough inventory');
         }
     }
-
 
     const columns = [
         {
@@ -108,7 +118,14 @@ export default function CartItemTable({ cartItems, onMutate }) {
 
     return <>
         {contextHolder}
-        {showModal && <PlaceOrderModal onCancel={handleCloseModal} selectedItems={selectedItems} onOk={handleOrderSubmit} />}
+        {showModal && (
+            <PlaceOrderModal
+                onCancel={handleCloseModal}
+                selectedItems={selectedItems}
+                onOk={handleOrderSubmit}
+                onOrderUpdate={setOrderUpdateMessage} // 将 WebSocket 消息传递到 CartItemTable
+            />
+        )}
         <Table
             columns={columns}
             rowSelection={{
@@ -132,11 +149,11 @@ export default function CartItemTable({ cartItems, onMutate }) {
                 ...item,
                 key: item.id
             }))}
-            pagination={false} // 禁用Table组件自带的分页
+            pagination={false} // 禁用 Table 组件自带的分页
         />
         <p style={{fontSize: 20, fontWeight: "bold", textAlign: "left", margin: 20}}>Total: {computeTotalPrice()}元</p>
-        <Button type="primary" disabled={selectedItems.length === 0}
-                onClick={handleOpenModal}
-        >Place Order</Button>
+        <Button type="primary" disabled={selectedItems.length === 0} onClick={handleOpenModal}>
+            Place Order
+        </Button>
     </>
 }

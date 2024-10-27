@@ -13,7 +13,8 @@ const { TextArea } = Input;
 export default function PlaceOrderModal({
                                             selectedItems, // 选中的商品项列表
                                             onOk, // 确认下单后的回调函数
-                                            onCancel // 取消下单的回调函数
+                                            onCancel, // 取消下单的回调函数
+                                            onOrderUpdate // 新增回调，将消息传递给 CartPage
                                         }) {
     // Create a form instance using the Form hook
     const [form] = Form.useForm();
@@ -36,7 +37,7 @@ export default function PlaceOrderModal({
             itemIds: selectedItems.map(item => item.id) // 从选中的商品项中提取商品ID
         };
         // Send place order request
-        let res = await placeOrder(orderInfo);
+        let res = await placeOrder(orderInfo, onOrderUpdate);
         // Handle place order response
         handleBaseApiResponse(res, messageApi, onOk);
     };
