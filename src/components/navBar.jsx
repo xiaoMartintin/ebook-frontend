@@ -12,7 +12,8 @@ import {
     PieChartOutlined,
     DashboardOutlined,
     BookOutlined,
-    UsergroupAddOutlined
+    UsergroupAddOutlined,
+    ApiOutlined
 } from '@ant-design/icons';
 import { logoutService } from "../service/logoutService";
 import useMessage from "antd/es/message/useMessage";
@@ -38,7 +39,8 @@ export default function NavBar() {
         { label: "CART", value: "/cart", icon: <ShoppingCartOutlined /> },
         { label: "ORDER", value: "/order", icon: <OrderedListOutlined /> },
         { label: "RANKING", value: "/rank", icon: <BarChartOutlined /> },
-        { label: "STATISTICS", value: "/statistics", icon: <PieChartOutlined /> }
+        { label: "STATISTICS", value: "/statistics", icon: <PieChartOutlined /> },
+        { label: "MICROSERVICE", value: "/microservice", icon: <ApiOutlined /> }
     ];
 
     const adminNavItems = [

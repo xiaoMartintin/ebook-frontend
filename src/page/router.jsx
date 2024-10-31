@@ -5,7 +5,7 @@ import BookPage from './BookPage';
 import CartPage from './CartPage';
 import OrderPage from './OrderPage';
 import RankPage from './RankingPage';
-import ApiPage from './ApiPage';
+import MicroservicePage from "./microServicePage";
 import RegisterPage from './RegisterPage';
 import StatisticsPage from './StatisticsPage';
 import UserPage from './UserPage';
@@ -32,6 +32,7 @@ export default function AppRouter() {
                 <Route path="/rank" element={user ? <RankPage /> : <Navigate to="/login" />} />
                 <Route path="/statistics" element={user ? <StatisticsPage /> : <Navigate to="/login" />} />
                 <Route path="/profile" element={user ? <UserPage /> : <Navigate to="/login" />} />
+                <Route path="/microservice" element={user ? <MicroservicePage /> : <Navigate to="/login" />} />
                 {user && user.is_admin === 1 ? (
                     <>
                         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />

@@ -1,0 +1,23 @@
+.card-container {
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'PT Serif', 'Helvetica', sans-serif;
+}
+
+.book-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #00A3D9;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.search-button {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
