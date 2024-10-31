@@ -1,5 +1,5 @@
 import { DUMMY_RESPONSE, PREFIX, post, getJson } from "../utils/common";
-import { createWebSocket, closeWebSocket } from "../utils/websocketUtils";
+import { createWebSocket } from "../utils/websocketUtils";
 
 export async function placeOrder(orderInfo, onOrderUpdate) {
     const url = `${PREFIX}/order`;
@@ -8,8 +8,13 @@ export async function placeOrder(orderInfo, onOrderUpdate) {
     try {
         const userId = sessionStorage.getItem("userId");
         if (userId) {
-            createWebSocket(userId, (orderUpdate) => {
+            // 构造正确的 WebSocket URL
+            const wsUrl = `ws://localhost:8082/websocket/transfer/${userId}`;
+            createWebSocket(wsUrl, (orderUpdate) => {
                 console.log("Order update received in placeOrder:", orderUpdate); // 调试输出
+                if (orderUpdate.message) {
+                    console.log("Message from WebSocket:", orderUpdate.message);
+                }
                 if (onOrderUpdate) {
                     onOrderUpdate(orderUpdate.message); // 将 WebSocket 消息传递给 CartItemTable
                 }
@@ -22,13 +27,9 @@ export async function placeOrder(orderInfo, onOrderUpdate) {
     } catch (e) {
         console.error("Error placing order:", e);
         res = DUMMY_RESPONSE;
-    } finally {
-        closeWebSocket();
     }
-
     return res;
 }
-
 
 
 export async function getOrders(filters = {}) {
